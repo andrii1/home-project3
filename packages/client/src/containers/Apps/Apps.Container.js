@@ -583,7 +583,7 @@ export const Apps = () => {
     <main>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Find best AI apps for free" />
+        <meta name="description" content="Find best NGL questions for free" />
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
