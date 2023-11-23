@@ -1,2 +1,2 @@
 # home-project3
-Description
+Home project 3
