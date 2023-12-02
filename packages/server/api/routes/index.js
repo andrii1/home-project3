@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const exampleResources = require('./exampleResources.router');
-const apps = require('./apps.router');
+const questions = require('./questions.router');
 const categories = require('./categories.router');
 const topics = require('./topics.router');
 const users = require('./users.router');
@@ -42,7 +42,7 @@ const swaggerDocument = swaggerJsDoc(swaggerOptions);
 router.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 router.use('/exampleResources', exampleResources);
-router.use('/apps', apps);
+router.use('/questions', questions);
 router.use('/categories', categories);
 router.use('/topics', topics);
 router.use('/users', users);

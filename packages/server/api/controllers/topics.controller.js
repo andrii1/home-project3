@@ -6,14 +6,10 @@ const knex = require('../../config/db');
 /* Get all topics */
 const getTopics = async () => {
   try {
-    const topics = await knex('topics')
-      .select(
-        'topics.id as id',
-        'topics.title as title',
-        'topics.category_id as categoryId',
-        'categories.title as categoryTitle',
-      )
-      .join('categories', 'topics.category_id', '=', 'categories.id');
+    const topics = await knex('topics').select(
+      'topics.id as id',
+      'topics.title as title',
+    );
     return topics;
   } catch (error) {
     return error.message;

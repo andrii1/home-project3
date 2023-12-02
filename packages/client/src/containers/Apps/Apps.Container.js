@@ -73,9 +73,11 @@ export const Apps = () => {
   // first fetch
   useEffect(() => {
     setIsLoading(true);
-    const url = `${apiURL()}/apps?page=0&column=${orderBy.column}&direction=${
-      orderBy.direction
-    }${topicIdParam !== undefined ? `&filteredTopics=${topicIdParam}` : ''}${
+    const url = `${apiURL()}/questions?page=0&column=${
+      orderBy.column
+    }&direction=${orderBy.direction}${
+      topicIdParam !== undefined ? `&filteredTopics=${topicIdParam}` : ''
+    }${
       categoryIdParam !== undefined
         ? `&filteredCategories=${categoryIdParam}`
         : ''
@@ -88,6 +90,7 @@ export const Apps = () => {
         ? `&filteredDetails=${encodeURIComponent(filteredDetails)}`
         : ''
     }`;
+    console.log(url, 'url');
 
     // if (topicIdParam) {
     //   url = `${apiURL()}/apps?page=0&filteredTopics=${topicIdParam}&column=${
@@ -135,7 +138,7 @@ export const Apps = () => {
     setIsLoading(true);
     setError(null);
 
-    const url = `${apiURL()}/apps?page=${page}&column=${
+    const url = `${apiURL()}/questions?page=${page}&column=${
       orderBy.column
     }&direction=${orderBy.direction}${
       topicIdParam !== undefined ? `&filteredTopics=${topicIdParam}` : ''
@@ -345,15 +348,15 @@ export const Apps = () => {
       setTopics(topicsResponse);
     }
 
-    async function fetchCategories() {
-      const response = await fetch(`${apiURL()}/categories/`);
-      const categoriesResponse = await response.json();
-      setCategories(categoriesResponse);
-    }
+    // async function fetchCategories() {
+    //   const response = await fetch(`${apiURL()}/categories/`);
+    //   const categoriesResponse = await response.json();
+    //   setCategories(categoriesResponse);
+    // }
 
     // fetchApps();
     fetchTopics();
-    fetchCategories();
+    // fetchCategories();
   }, []);
 
   const handleSearch = (event) => {
@@ -614,7 +617,9 @@ export const Apps = () => {
           ''
         )}
       </div>
-      <section className="container-topics">{topicsList}</section>
+      {topics.length > 0 && (
+        <section className="container-topics">{topicsList}</section>
+      )}
       <section className="container-filters">
         <DropDownView
           label="Sort"

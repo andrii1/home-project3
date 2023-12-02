@@ -44,24 +44,23 @@ export const Navigation = () => {
 
   useEffect(() => {
     async function fetchCategories() {
-      const responseCategories = await fetch(`${apiURL()}/categories/`);
       const responseTopics = await fetch(`${apiURL()}/topics/`);
-      const categoriesResponse = await responseCategories.json();
+
       const topicsResponse = await responseTopics.json();
       setTopics(topicsResponse);
-      const combinedArray = categoriesResponse.concat(topicsResponse);
+
       if (searchTerms) {
-        const filteredSearch = combinedArray.filter((item) =>
+        const filteredSearch = topicsResponse.filter((item) =>
           item.title.toLowerCase().includes(searchTerms.toLowerCase()),
         );
         setResultsHome(filteredSearch);
       } else {
-        setResultsHome(categoriesResponse);
+        setResultsHome(topicsResponse);
       }
     }
 
     async function fetchApps() {
-      const responseApps = await fetch(`${apiURL()}/apps/`);
+      const responseApps = await fetch(`${apiURL()}/questions/`);
 
       const responseAppsJson = await responseApps.json();
       if (searchTerms) {
@@ -71,10 +70,7 @@ export const Navigation = () => {
             item.description
               .toLowerCase()
               .includes(searchTerms.toLowerCase()) ||
-            item.topicTitle.toLowerCase().includes(searchTerms.toLowerCase()) ||
-            item.categoryTitle
-              .toLowerCase()
-              .includes(searchTerms.toLowerCase()),
+            item.topicTitle.toLowerCase().includes(searchTerms.toLowerCase()),
         );
         setResultsHomeApps(filteredSearch);
       }

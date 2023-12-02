@@ -6,13 +6,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('topics', (table) => {
     table.increments();
     table.string('title').notNullable();
-    table.integer('category_id').unsigned();
-    table
-      .foreign('category_id')
-      .references('id')
-      .inTable('categories')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
+    table.string('description').notNullable();
   });
 };
 

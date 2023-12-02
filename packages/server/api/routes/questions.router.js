@@ -5,12 +5,8 @@ const express = require('express');
 
 const router = express.Router({ mergeParams: true });
 
-const topicAppsRouter = require('./topicApps.router');
-
-router.use('/topics/:topicId/apps', topicAppsRouter);
-
 // controllers
-const appsController = require('../controllers/apps.controller');
+const questionsController = require('../controllers/questions.controller');
 
 /**
  * @swagger
@@ -31,8 +27,8 @@ const appsController = require('../controllers/apps.controller');
 router.get('/', (req, res, next) => {
   if (req.query.filteredTopics && req.query.search) {
     const array = req.query.filteredTopics.split(',');
-    appsController
-      .getAppsByTopicsSearch(
+    questionsController
+      .getQuestionsByTopicsSearch(
         req.query.search,
         array,
         req.query.column,
@@ -59,8 +55,8 @@ router.get('/', (req, res, next) => {
       arrayDetails = decoded.split(',');
     }
     // const array = req.query.filteredTopics.split(',');
-    appsController
-      .getAppsBy({
+    questionsController
+      .getQuestionsBy({
         page: req.query.page,
         column: req.query.column,
         direction: req.query.direction,
@@ -74,8 +70,8 @@ router.get('/', (req, res, next) => {
   }
   // else if (req.query.filteredCategories) {
   //   const array = req.query.filteredCategories.split(',');
-  //   appsController
-  //     .getAppsByCategory(
+  //   questionsController
+  //     .getquestionsByCategory(
   //       req.query.filteredCategories,
   //       req.query.page,
   //       req.query.column,
@@ -84,8 +80,8 @@ router.get('/', (req, res, next) => {
   //     .then((result) => res.json(result))
   //     .catch(next);
   // } else if (req.query.search) {
-  //   appsController
-  //     .getAppsSearch(
+  //   questionsController
+  //     .getquestionsSearch(
   //       req.query.search,
   //       req.query.column,
   //       req.query.direction,
@@ -96,24 +92,24 @@ router.get('/', (req, res, next) => {
   //     .catch(next);
   // }
   else if (req.query.page) {
-    appsController
-      .getApps(req.query.page, req.query.column, req.query.direction)
+    questionsController
+      .getQuestions(req.query.page, req.query.column, req.query.direction)
       .then((result) => res.json(result))
       .catch(next);
   } else {
-    appsController
-      .getAppsAll()
+    questionsController
+      .getQuestionsAll()
       .then((result) => res.json(result))
       .catch(next);
   }
 });
 
-/* Create Apps */
+/* Create questions */
 
 router.post('/', (req, res, next) => {
   const { token } = req.headers;
-  appsController
-    .createApps(token, req.body)
+  questionsController
+    .createQuestions(token, req.body)
     .then((result) => res.json(result))
     .catch(next);
 });
@@ -144,8 +140,8 @@ router.post('/', (req, res, next) => {
  */
 
 router.get('/:id', (req, res, next) => {
-  appsController
-    .getAppById(req.params.id)
+  questionsController
+    .getQuestionById(req.params.id)
     .then((result) => res.json(result))
     .catch(next);
 });
