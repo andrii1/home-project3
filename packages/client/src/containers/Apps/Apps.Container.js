@@ -42,7 +42,7 @@ export const Apps = () => {
   const [showFiltersContainer, setShowFiltersContainer] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [listView, setListView] = useState(false);
+  const [listView, setListView] = useState(true);
   const [page, setPage] = useState(0);
   const [counter, setCounter] = useState(0);
   const [apps, setApps] = useState({});
@@ -495,13 +495,14 @@ export const Apps = () => {
   if (topicIdParam) {
     pageTitle = `${topics
       .filter((topic) => topic.id === parseInt(topicIdParam, 10))
-      .map((item) => item.title)} - AI apps`;
+      .map((item) => item.title)} - NGL questions`;
   } else if (categoryIdParam) {
     pageTitle = `${categories
       .filter((category) => category.id === parseInt(categoryIdParam, 10))
-      .map((item) => item.title)} - AI apps`;
+      .map((item) => item.title)} - NGL questions`;
   } else {
-    pageTitle = 'Apps With AI - browse 200+ AI apps';
+    pageTitle =
+      'NGL questions - browse best ngl questions and messages, bot ngl questions';
   }
 
   const sortOptions = ['Recent', 'A-Z', 'Z-A'];
@@ -590,7 +591,7 @@ export const Apps = () => {
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Browse 200+ AI apps</h1>
+        <h1 className="hero-header">Browse NGL questions</h1>
         <form className="home">
           <label>
             <FontAwesomeIcon className="search-icon" icon={faSearch} />
@@ -599,7 +600,7 @@ export const Apps = () => {
               className="input-search-home"
               onChange={handleSearch}
               /* onFocus={handleClick} */
-              placeholder="I want to build..."
+              placeholder="Search NGL questions..."
             />
           </label>
         </form>
@@ -693,7 +694,7 @@ export const Apps = () => {
                   title={app.title}
                   description={app.description}
                   url={app.url}
-                  urlImage={app.url_image}
+                  urlImage="message"
                   topic={app.topicTitle}
                   topicId={app.topic_id}
                   pricingType={app.pricing_type}

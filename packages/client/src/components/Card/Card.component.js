@@ -52,7 +52,7 @@ export const Card = ({
         </div>
         <div className="topics-bookmark--small">
           <Badge secondary label={topic} size="small" />
-          <Badge label={pricingType} size="small" />
+          {/* <Badge label={pricingType} size="small" /> */}
         </div>
       </Link>
     );
@@ -65,11 +65,9 @@ export const Card = ({
         target="_blank"
         className={`card-image ${listCard ? 'list' : ''}`}
         style={{
-          backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/w_${
-            listCard ? '500' : '700'
-          },q_auto,f_auto/apps_ai/${urlImage}.png )`,
+          backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/${urlImage}.png )`,
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
+          backgroundSize: '100px',
         }}
       />
       <div className={`card-body ${listCard ? 'list' : ''}`}>
@@ -87,7 +85,7 @@ export const Card = ({
               />
             </Link>
           </div>
-          <Badge label={pricingType} size="small" />
+          {/* <Badge label={pricingType} size="small" /> */}
         </div>
         {description && (
           <div className="card-description">
@@ -95,7 +93,7 @@ export const Card = ({
           </div>
         )}
         <div className="topics-bookmark">
-          <Link to={`/apps/topic/${topicId}`}>
+          <Link to={`/questions/topic/${topicId}`}>
             <Button label={topic} size="small" />
           </Link>
 
