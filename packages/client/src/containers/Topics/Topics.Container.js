@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import './Categories.Style.css';
+import './Topics.Style.css';
 import { apiURL } from '../../apiURL';
 import { CardCategories } from '../../components/CardCategories/CardCategories.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-export const Categories = () => {
+export const Topics = () => {
   const [searchTerms, setSearchTerms] = useState();
   const [resultsHome, setResultsHome] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -114,8 +114,8 @@ export const Categories = () => {
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Categories</h1>
-        <p className="subheading">200+ AI apps among 30+ topics</p>
+        <h1 className="hero-header">Topics</h1>
+        <p className="subheading">Find best NGL messages by topics</p>
         <form>
           <label>
             <FontAwesomeIcon

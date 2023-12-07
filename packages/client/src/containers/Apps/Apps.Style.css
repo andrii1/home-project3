@@ -23,6 +23,12 @@ main {
   margin-bottom: 0.3rem;
 }
 
+@media only screen and (max-width: 768px) {
+  .container-cards.grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .hero form {
   margin-top: 2rem;
 }
@@ -194,10 +200,11 @@ main {
 
 @media only screen and (max-width: 992px) {
   .hero {
-    width: 90%;
+    display: none;
+    /* width: 90%;
     height: 100%;
     margin: 2rem auto;
-    padding: 2rem 0rem;
+    padding: 2rem 0rem; */
   }
   .container-cards {
     grid-template-columns: repeat(1, 1fr);

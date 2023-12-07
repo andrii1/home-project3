@@ -10,12 +10,16 @@ import {
   faUser,
   faRightFromBracket,
   faSearch,
+  faBars,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../Modal/Modal.Component';
 
 export const Navigation = () => {
   const { user, name, logout } = useUserContext();
   const [openModal, setOpenModal] = useState(false);
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [hamburgerUserOpen, setHamburgerUserOpen] = useState(false);
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [searchTerms, setSearchTerms] = useState();
@@ -30,6 +34,23 @@ export const Navigation = () => {
     setOpenSearchModal(false);
     document.body.style.overflow = 'visible';
   };
+  const toggleHamburger = () => {
+    setHamburgerOpen(!hamburgerOpen);
+  };
+
+  const toggleHamburgerUser = () => {
+    setHamburgerUserOpen(!hamburgerUserOpen);
+  };
+
+  useEffect(() => {
+    // Applying on mount
+    if (hamburgerOpen || hamburgerUserOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [hamburgerOpen, hamburgerUserOpen]);
+
   React.useEffect(() => {
     const down = (e) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
@@ -119,6 +140,98 @@ export const Navigation = () => {
   ));
   return (
     <>
+      {' '}
+      <div className="navigation-mobile">
+        <div className="menu">
+          <ul>
+            <li>
+              <Button
+                secondary
+                className="hamburger-menu-button"
+                onClick={toggleHamburger}
+              >
+                <FontAwesomeIcon icon={hamburgerOpen ? faXmark : faBars} />
+              </Button>
+              <ul
+                className={`hamburger-menu ${
+                  hamburgerOpen ? 'menu-open' : 'menu-closed'
+                }`}
+              >
+                <li>
+                  <NavLink to="/categories" className="nav-link">
+                    Categories
+                  </NavLink>
+                </li>
+                <li>
+                  {user ? (
+                    <NavLink to="/apps/new" className="login submit">
+                      Submit
+                    </NavLink>
+                  ) : (
+                    <NavLink
+                      onClick={() => {
+                        setOpenModal(true);
+                        setModalTitle('Do you want to add your prompts?');
+                      }}
+                      className="login submit"
+                    >
+                      Submit an app
+                    </NavLink>
+                  )}
+                </li>
+              </ul>
+            </li>
+            {/* <li>
+              <FontAwesomeIcon className="search-icon" icon={faSearch} />
+            </li> */}
+            <li>
+              <NavLink to="/" className="nav-link">
+                <img src={logo} alt="logo" className="img-logo" />
+              </NavLink>
+            </li>
+            <li>
+              {user ? (
+                <div className="container-logged-in">
+                  <Button
+                    className="hamburger-menu-button"
+                    onClick={toggleHamburgerUser}
+                    primary
+                  >
+                    <FontAwesomeIcon
+                      icon={hamburgerUserOpen ? faXmark : faUser}
+                    />
+                  </Button>
+                  <div
+                    className={`menu-user ${
+                      hamburgerUserOpen ? 'menu-open' : 'menu-closed'
+                    }`}
+                  >
+                    {name}
+                    <NavLink to="/bookmarks" className="login">
+                      Bookmarks
+                    </NavLink>
+                    <FontAwesomeIcon
+                      onClick={logout}
+                      className="share-icon"
+                      icon={faRightFromBracket}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="container-logged-out">
+                  <NavLink to="/login" className="login">
+                    Log in
+                  </NavLink>
+
+                  <Link to="/signup" className="signup">
+                    <Button primary label="Sign up" />
+                  </Link>
+                </div>
+              )}
+            </li>
+          </ul>
+        </div>
+      </div>
       <div className="navigation">
         <div className="menu">
           <ul>
@@ -141,8 +254,8 @@ export const Navigation = () => {
               </form>
             </li>
             <li>
-              <NavLink to="/categories" className="nav-link">
-                Categories
+              <NavLink to="/topics" className="nav-link">
+                Topics
               </NavLink>
             </li>
           </ul>
@@ -151,8 +264,8 @@ export const Navigation = () => {
           <ul>
             <li>
               {user ? (
-                <NavLink to="/apps/new" className="login submit">
-                  Submit
+                <NavLink to="/questions/new" className="login submit">
+                  Submit a question
                 </NavLink>
               ) : (
                 <NavLink
@@ -162,7 +275,7 @@ export const Navigation = () => {
                   }}
                   className="login submit"
                 >
-                  Submit
+                  Submit a question
                 </NavLink>
               )}
             </li>

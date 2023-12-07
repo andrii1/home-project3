@@ -629,13 +629,13 @@ export const Apps = () => {
           showFilterIcon={false}
         />
 
-        <Button
+        {/* <Button
           secondary
           onClick={(event) => setShowFiltersContainer(!showFiltersContainer)}
           backgroundColor="#ffe5d9"
           label="Filters"
           icon={<FontAwesomeIcon className="filter-icon" icon={faFilter} />}
-        />
+        /> */}
         <Button
           secondary
           onClick={() => setListView(!listView)}

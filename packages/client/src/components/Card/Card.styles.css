@@ -38,7 +38,7 @@
 }
 
 .card-body.list {
-  flex: 0 0 75%;
+  flex: 0 0 80%;
   box-shadow: none !important;
   border-top-right-radius: 0.5rem !important;
 }
@@ -49,7 +49,7 @@
 
 .card-category h2,
 .card-list h2 {
-  color: #e5989b;
+  color: #000;
   margin: 0rem;
   display: flex;
   justify-content: center;
@@ -67,7 +67,7 @@
 }
 
 .card-image.list {
-  flex: 0 0 25% !important;
+  flex: 0 0 20% !important;
 
   border-bottom-left-radius: 0.5rem;
   border-top-right-radius: 0rem !important;
@@ -78,6 +78,13 @@
   align-items: center;
   justify-content: space-between;
   flex: 0 0 70%;
+}
+
+@media only screen and (max-width: 768px) {
+  .card-list .card-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }
 
 .card-list h2 {
@@ -93,7 +100,7 @@
 }
 
 .card-header a h2:hover {
-  color: #ffb4a2;
+  color: #f13132;
 }
 
 .card-title {
@@ -108,7 +115,7 @@
 }
 
 .card-header a .fa-arrow-up-right-from-square:hover {
-  color: #ffb4a2 !important;
+  color: #f13132 !important;
 }
 
 .card-category--small {
