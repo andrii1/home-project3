@@ -242,7 +242,7 @@ export const Apps = () => {
   }, [filteredTopics]);
   useEffect(() => {
     async function fetchAppsSearch() {
-      const responseApps = await fetch(`${apiURL()}/apps/`);
+      const responseApps = await fetch(`${apiURL()}/questions/`);
 
       const responseAppsJson = await responseApps.json();
 
@@ -444,7 +444,7 @@ export const Apps = () => {
   };
 
   const dropdownList = resultsHome.map((app) => (
-    <Link key={app.id} to={`/apps/${app.id}`}>
+    <Link key={app.id} to={`/questions/${app.id}`}>
       <li>{app.title}</li>
     </Link>
   ));
@@ -452,7 +452,7 @@ export const Apps = () => {
   const topicsList = topics.map((topic) => {
     if (topicIdParam) {
       return (
-        <Link to={`/apps/topic/${topic.id}`}>
+        <Link to={`/questions/topic/${topic.id}`}>
           <Button
             primary={topic.id.toString() === topicIdParam.toString() && true}
             secondary={topic.id !== topicIdParam && true}
@@ -463,13 +463,13 @@ export const Apps = () => {
     }
     if (categoryIdParam) {
       return (
-        <Link to={`/apps/topic/${topic.id}`}>
+        <Link to={`/questions/topic/${topic.id}`}>
           <Button secondary label={topic.title} />
         </Link>
       );
     }
     return (
-      <Link to={`/apps/topic/${topic.id}`}>
+      <Link to={`/questions/topic/${topic.id}`}>
         <Button secondary label={topic.title} />
       </Link>
     );
@@ -619,7 +619,16 @@ export const Apps = () => {
         )}
       </div>
       {topics.length > 0 && (
-        <section className="container-topics">{topicsList}</section>
+        <section className="container-topics">
+          <Link to="/">
+            <Button
+              primary={!topicIdParam && true}
+              secondary={topicIdParam && true}
+              label="All NGL questions"
+            />
+          </Link>
+          {topicsList}
+        </section>
       )}
       <section className="container-filters">
         <DropDownView

@@ -76,6 +76,10 @@ main {
   padding: 1rem;
 }
 
+.topics-div.center {
+  justify-content: center;
+}
+
 @media only screen and (max-width: 992px) {
   .hero {
     width: 90%;

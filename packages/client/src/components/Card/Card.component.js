@@ -67,14 +67,14 @@ export const Card = ({
         style={{
           backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/${urlImage}.png )`,
           backgroundRepeat: 'no-repeat',
-          backgroundSize: '100px',
+          backgroundSize: `${listCard ? '80px' : '100px'}`,
         }}
       />
       <div className={`card-body ${listCard ? 'list' : ''}`}>
         <div className="card-header">
           <div className="card-title">
             <Link to={`/questions/${id}`} target="_blank">
-              <h2>{title}</h2>
+              <h2 className={`${listCard ? 'list-card' : ''}`}>{title}</h2>
             </Link>
             <Link to={`/apps/${id}`} target="_blank">
               <FontAwesomeIcon

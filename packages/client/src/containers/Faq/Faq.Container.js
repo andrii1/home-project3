@@ -11,13 +11,29 @@ export const Faq = () => {
       </Helmet>
       <main>
         <h1 className="hero-header">FAQ</h1>
-        <h2>How many apps are here?</h2>
-        <p>Nearly 200 AI apps, spread over 34 topics and 7 categories.</p>
-        <h2>What are the main features?</h2>
-        <p>You can filter and sort apps, bookmark apps, add ratings.</p>
-        <h2>How to add my app?</h2>
+        <h2>What is NGL questions website?</h2>
         <p>
-          <Link className="link" to="../apps/new">
+          NGL questions is the largest database of bot/fake messages from NGL
+          app. With bot messages list - you will clearly know which messages on
+          NGL were fake and therefore you won&apos;t need to upgrade on NGL app
+          without the need.
+        </p>
+        <p>
+          Also, this app helps you to find best NGL questions and messages for
+          different topics.
+        </p>
+        <h2>Are there fake messages on NGL?</h2>
+        <p>
+          Yes, NGL app sends you fake/bot messages. You can distinguish them by
+          seeing &quot;Sent with ❤️ from team NGL&quot;. They are also called
+          &quot;love messages&quot;.
+        </p>
+        <p>
+          You can compare bot messages in NGL with messages on this website.
+        </p>
+        <h2>How to suggest a bot message</h2>
+        <p>
+          <Link className="link" to="../questions/new">
             Submit a form
           </Link>{' '}
           or reach out via agorh @ icloud.com

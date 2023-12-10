@@ -80,10 +80,21 @@
   flex: 0 0 70%;
 }
 
+h2.list-card {
+  text-align: left;
+}
+
 @media only screen and (max-width: 768px) {
   .card-list .card-header {
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+  h2.list-card {
+    font-size: 1.25rem;
+  }
+
+  .card-list {
+    padding-left: 0.5rem;
   }
 }
 
