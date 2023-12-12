@@ -163,3 +163,9 @@ h2.list-card {
 .card-category--small {
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
 }
+
+.blur {
+  font-size: 40px;
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+}

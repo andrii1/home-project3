@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -22,7 +23,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export const Apps = () => {
-  const { user } = useUserContext();
+  const { user, customer } = useUserContext();
   const location = useLocation();
   const { topicIdParam, categoryIdParam } = useParams();
   const [searchTerms, setSearchTerms] = useState();
@@ -50,7 +51,7 @@ export const Apps = () => {
   const [error, setError] = useState(false);
   const [orderBy, setOrderBy] = useState({
     column: 'id',
-    direction: 'desc',
+    direction: 'asc',
   });
   const [pricingOptionsChecked, setPricingOptionsChecked] = useState([
     { title: 'Free', checked: false },
@@ -484,13 +485,18 @@ export const Apps = () => {
     } else if (sortOrder === 'Z-A') {
       column = 'title';
       direction = 'desc';
-    } else {
+    } else if (sortOrder === 'Recent') {
       column = 'id';
       direction = 'desc';
+    } else {
+      column = 'id';
+      direction = 'asc';
     }
 
     setOrderBy({ column, direction });
   }, [sortOrder]);
+
+  console.log(sortOrder, 'sortOrder');
   let pageTitle;
   if (topicIdParam) {
     pageTitle = `${topics
@@ -685,42 +691,46 @@ export const Apps = () => {
           </form>
         </div>
       </section>
-      {apps.data ? (
-        <section className="container-scroll">
-          <InfiniteScroll
-            dataLength={apps.data.length}
-            next={fetchApps}
-            hasMore={apps.hasMore} // Replace with a condition based on your data source
-            loader={<p>Loading...</p>}
-            endMessage={<p>No more data to load.</p>}
-            className={`container-cards ${listView ? 'list' : 'grid'}`}
-          >
-            {apps.data.map((app) => {
-              return (
-                <Card
-                  listCard={listView}
-                  id={app.id}
-                  title={app.title}
-                  description={app.description}
-                  url={app.url}
-                  urlImage="message"
-                  topic={app.topicTitle}
-                  topicId={app.topic_id}
-                  pricingType={app.pricing_type}
-                  isFavorite={favorites.some((x) => x.id === app.id)}
-                  addFavorite={(event) => addFavorite(app.id)}
-                  deleteBookmark={() => handleDeleteBookmarks(app.id)}
-                  bookmarkOnClick={() => {
-                    setOpenModal(true);
-                    setModalTitle('Sign up to add bookmarks');
-                  }}
-                />
-              );
-            })}
-          </InfiniteScroll>
-        </section>
+      {(customer && topicIdParam === 1) || topicIdParam !== 1 ? (
+        apps.data ? (
+          <section className="container-scroll">
+            <InfiniteScroll
+              dataLength={apps.data.length}
+              next={fetchApps}
+              hasMore={apps.hasMore} // Replace with a condition based on your data source
+              loader={<p>Loading...</p>}
+              endMessage={<p>No more data to load.</p>}
+              className={`container-cards ${listView ? 'list' : 'grid'}`}
+            >
+              {apps.data.map((app) => {
+                return (
+                  <Card
+                    listCard={listView}
+                    id={app.id}
+                    title={app.title}
+                    description={app.description}
+                    url={app.url}
+                    urlImage="message"
+                    topic={app.topicTitle}
+                    topicId={app.topic_id}
+                    pricingType={app.pricing_type}
+                    isFavorite={favorites.some((x) => x.id === app.id)}
+                    addFavorite={(event) => addFavorite(app.id)}
+                    deleteBookmark={() => handleDeleteBookmarks(app.id)}
+                    bookmarkOnClick={() => {
+                      setOpenModal(true);
+                      setModalTitle('Sign up to add bookmarks');
+                    }}
+                  />
+                );
+              })}
+            </InfiniteScroll>
+          </section>
+        ) : (
+          <Loading />
+        )
       ) : (
-        <Loading />
+        ''
       )}
       <Modal title={modalTitle} open={openModal} toggle={toggleModal}>
         <Link to="/signup">

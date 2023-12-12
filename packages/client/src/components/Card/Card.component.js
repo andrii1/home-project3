@@ -34,7 +34,7 @@ export const Card = ({
   deleteBookmark,
   bookmarkOnClick,
 }) => {
-  const { user } = useUserContext();
+  const { user, customer } = useUserContext();
   if (smallCard) {
     return (
       <Link
@@ -74,7 +74,13 @@ export const Card = ({
         <div className="card-header">
           <div className="card-title">
             <Link to={`/questions/${id}`} target="_blank">
-              <h2 className={`${listCard ? 'list-card' : ''}`}>{title}</h2>
+              <h2
+                className={`${listCard ? 'list-card' : ''} ${
+                  !customer && topicId === 1 ? 'blur' : ''
+                }`}
+              >
+                {title}
+              </h2>
             </Link>
             <Link to={`/apps/${id}`} target="_blank">
               <FontAwesomeIcon
