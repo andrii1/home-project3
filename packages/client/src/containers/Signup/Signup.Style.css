@@ -97,6 +97,11 @@
   margin-left: var(--text-divider-gap);
 }
 
+.form-box input[type='password'] {
+  height: 2.5rem;
+  padding: 1rem 1rem;
+}
+
 @media only screen and (max-width: 992px) {
   .form-box {
     margin-top: 0rem;

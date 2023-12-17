@@ -67,16 +67,22 @@ export const Submit = () => {
   return (
     <>
       <Helmet>
-        <title>Submit an app</title>
+        <title>Suggest NGL question</title>
       </Helmet>
       <main>
-        <h1 className="hero-header">Submit an app</h1>
+        <h1 className="hero-header">Submit NGL question</h1>
+
         <div className="form-container add-app-container">
+          <p className="form-label">
+            Help to grow the database of bot NGL messages. Submit a bot NGL
+            message below. If you have any ideas for funny NGL questions - add
+            them here.
+          </p>
           <div className="form-box submit-box">
             <form>
               <TextFormTextarea
                 value={promptTitle}
-                placeholder="App name"
+                placeholder="NGL question"
                 onChange={validatePromptTitle}
                 error={promptTitleError}
               />
@@ -97,7 +103,7 @@ export const Submit = () => {
                 primary
                 className="btn-add-prompt"
                 onClick={handleSubmit}
-                label="Suggest an app"
+                label="Submit"
               />
               {validForm && (
                 <Modal

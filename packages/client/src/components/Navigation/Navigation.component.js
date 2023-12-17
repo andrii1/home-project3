@@ -6,6 +6,8 @@ import { useUserContext } from '../../userContext';
 import { Button } from '../Button/Button.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../assets/images/logo.png';
+import { blurredQuestions } from '../../utils/blurredQuestions';
+import { handleStripeCheckout } from '../../utils/handleStripeCheckout';
 import {
   faUser,
   faRightFromBracket,
@@ -16,7 +18,7 @@ import {
 import Modal from '../Modal/Modal.Component';
 
 export const Navigation = () => {
-  const { user, name, logout } = useUserContext();
+  const { user, customer, name, logout } = useUserContext();
   const [openModal, setOpenModal] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [hamburgerUserOpen, setHamburgerUserOpen] = useState(false);
@@ -85,13 +87,8 @@ export const Navigation = () => {
 
       const responseAppsJson = await responseApps.json();
       if (searchTerms) {
-        const filteredSearch = responseAppsJson.filter(
-          (item) =>
-            item.title.toLowerCase().includes(searchTerms.toLowerCase()) ||
-            item.description
-              .toLowerCase()
-              .includes(searchTerms.toLowerCase()) ||
-            item.topicTitle.toLowerCase().includes(searchTerms.toLowerCase()),
+        const filteredSearch = responseAppsJson.filter((item) =>
+          item.title.toLowerCase().includes(searchTerms.toLowerCase()),
         );
         setResultsHomeApps(filteredSearch);
       }
@@ -129,18 +126,50 @@ export const Navigation = () => {
     }
     return finalResult;
   });
-  const dropDownResultsApps = resultsHomeApps.map((result) => (
-    <Link
-      to={`/apps/${result.id}`}
-      /* state={{ frontPageItem: relatedTopics }} */
-      onClick={() => toggleSearchModal()}
-    >
-      <li key={result.id}>{result.title}</li>
-    </Link>
-  ));
+  const dropDownResultsApps = resultsHomeApps.map((result) => {
+    if (!customer && result.topic_id === 1) {
+      return (
+        <div key={result.id}>
+          <li>
+            {/* <span className="blurred">
+            {
+              blurredQuestions[
+                Math.floor(Math.random() * blurredQuestions.length)
+              ]
+            }
+          </span> */}
+            {user ? (
+              <Button // eslint-disable-next-line react/jsx-no-bind
+                label="🔒 bot message... Upgrade"
+                size="small"
+                primary
+              />
+            ) : (
+              <Link key={result.id} to="/signup">
+                <Button // eslint-disable-next-line react/jsx-no-bind
+                  label="🔒 bot message... Sign up & upgrade"
+                  size="small"
+                  primary
+                />
+              </Link>
+            )}
+          </li>
+        </div>
+      );
+    }
+    return (
+      <Link
+        to={`/questions/${result.id}`}
+        /* state={{ frontPageItem: relatedTopics }} */
+        onClick={() => toggleSearchModal()}
+      >
+        <li key={result.id}>{result.title}</li>
+      </Link>
+    );
+  });
   return (
     <>
-      {' '}
+      {/* mobile navigation */}
       <div className="navigation-mobile">
         <div className="menu">
           <ul>
@@ -222,7 +251,6 @@ export const Navigation = () => {
                   <NavLink to="/login" className="login">
                     Log in
                   </NavLink>
-
                   <Link to="/signup" className="signup">
                     <Button primary label="Sign up" />
                   </Link>
@@ -232,6 +260,7 @@ export const Navigation = () => {
           </ul>
         </div>
       </div>
+      {/* desktop navigation */}
       <div className="navigation">
         <div className="menu">
           <ul>
@@ -262,6 +291,17 @@ export const Navigation = () => {
         </div>
         <div className="nav-buttons">
           <ul>
+            <li>
+              {user && !customer ? (
+                <Button
+                  onClick={() => handleStripeCheckout(user?.email)}
+                  primary
+                  label="Unlock NGL bot messages 👀"
+                />
+              ) : (
+                ''
+              )}
+            </li>
             <li>
               {user ? (
                 <NavLink to="/questions/new" className="login submit">
@@ -327,7 +367,7 @@ export const Navigation = () => {
       >
         <form>
           <label>
-            <FontAwesomeIcon className="search-icon" icon={faSearch} />
+            <FontAwesomeIcon className="search-icon-modal" icon={faSearch} />
             <input
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
@@ -341,20 +381,12 @@ export const Navigation = () => {
         </form>
         {searchTerms ? (
           <div className="dropdown-search-modal">
-            <h3>Apps</h3>
+            <h3>NGL questions</h3>
             <ul>
               {dropDownResultsApps.length > 0 ? (
                 dropDownResultsApps
               ) : (
-                <li>No apps found :(</li>
-              )}
-            </ul>
-            <h3>Topics & categories</h3>
-            <ul>
-              {dropDownResultsTopics.length > 0 ? (
-                dropDownResultsTopics
-              ) : (
-                <li>No topics found :(</li>
+                <li>No NGL questions found :(</li>
               )}
             </ul>
           </div>

@@ -2,17 +2,21 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+// import getStripe from '../../lib/getStripe';
 import './Apps.Style.css';
 import { apiURL } from '../../apiURL';
 import { Card } from '../../components/Card/Card.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BuyButton } from '../../components/BuyButton/BuyButton.Component';
 import { Button } from '../../components/Button/Button.component';
 import { Loading } from '../../components/Loading/Loading.Component';
 import DropDownView from '../../components/CategoriesListDropDown/CategoriesListDropDown.component';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Modal from '../../components/Modal/Modal.Component';
+import { blurredQuestions } from '../../utils/blurredQuestions';
 import { useUserContext } from '../../userContext';
+import { handleStripeCheckout } from '../../utils/handleStripeCheckout';
 
 import {
   faSearch,
@@ -51,7 +55,7 @@ export const Apps = () => {
   const [error, setError] = useState(false);
   const [orderBy, setOrderBy] = useState({
     column: 'id',
-    direction: 'asc',
+    direction: 'desc',
   });
   const [pricingOptionsChecked, setPricingOptionsChecked] = useState([
     { title: 'Free', checked: false },
@@ -91,7 +95,6 @@ export const Apps = () => {
         ? `&filteredDetails=${encodeURIComponent(filteredDetails)}`
         : ''
     }`;
-    console.log(url, 'url');
 
     // if (topicIdParam) {
     //   url = `${apiURL()}/apps?page=0&filteredTopics=${topicIdParam}&column=${
@@ -248,16 +251,8 @@ export const Apps = () => {
       const responseAppsJson = await responseApps.json();
 
       if (searchTerms) {
-        const filteredSearch = responseAppsJson.filter(
-          (item) =>
-            item.title.toLowerCase().includes(searchTerms.toLowerCase()) ||
-            item.description
-              .toLowerCase()
-              .includes(searchTerms.toLowerCase()) ||
-            item.topicTitle.toLowerCase().includes(searchTerms.toLowerCase()) ||
-            item.categoryTitle
-              .toLowerCase()
-              .includes(searchTerms.toLowerCase()),
+        const filteredSearch = responseAppsJson.filter((item) =>
+          item.title.toLowerCase().includes(searchTerms.toLowerCase()),
         );
         setResultsHome(filteredSearch);
       }
@@ -444,19 +439,58 @@ export const Apps = () => {
     setFilteredPricing([]);
   };
 
-  const dropdownList = resultsHome.map((app) => (
-    <Link key={app.id} to={`/questions/${app.id}`}>
-      <li>{app.title}</li>
-    </Link>
-  ));
+  const dropdownList = resultsHome.map((app) => {
+    if (!customer && app.topic_id === 1) {
+      return (
+        <div key={app.id}>
+          <li>
+            <span className="blurred">
+              {
+                blurredQuestions[
+                  Math.floor(Math.random() * blurredQuestions.length)
+                ]
+              }
+            </span>
+            {user ? (
+              <Button // eslint-disable-next-line react/jsx-no-bind
+                onClick={() => handleStripeCheckout(user?.email)}
+                label="🔒 bot message... Upgrade"
+                size="small"
+                primary
+              />
+            ) : (
+              <Link key={app.id} to="/signup">
+                <Button // eslint-disable-next-line react/jsx-no-bind
+                  label="🔒 bot message... Sign up & upgrade"
+                  size="small"
+                  primary
+                />
+              </Link>
+            )}
+          </li>
+        </div>
+      );
+    }
+    return (
+      <Link key={app.id} to={`/questions/${app.id}`}>
+        <li>{app.title}</li>
+      </Link>
+    );
+  });
 
   const topicsList = topics.map((topic) => {
     if (topicIdParam) {
       return (
         <Link to={`/questions/topic/${topic.id}`}>
           <Button
-            primary={topic.id.toString() === topicIdParam.toString() && true}
-            secondary={topic.id !== topicIdParam && true}
+            backgroundColor={
+              topic.id.toString() === topicIdParam.toString()
+                ? 'rgb(255, 229, 217)'
+                : 'white'
+            }
+            // primary={topic.id.toString() === topicIdParam.toString() && true}
+            // secondary={topic.id !== topicIdParam && true}
+            secondary
             label={topic.title}
           />
         </Link>
@@ -485,18 +519,14 @@ export const Apps = () => {
     } else if (sortOrder === 'Z-A') {
       column = 'title';
       direction = 'desc';
-    } else if (sortOrder === 'Recent') {
-      column = 'id';
-      direction = 'desc';
     } else {
       column = 'id';
-      direction = 'asc';
+      direction = 'desc';
     }
 
     setOrderBy({ column, direction });
   }, [sortOrder]);
 
-  console.log(sortOrder, 'sortOrder');
   let pageTitle;
   if (topicIdParam) {
     pageTitle = `${topics
@@ -589,6 +619,22 @@ export const Apps = () => {
     deleteFavorites();
   };
 
+  // async function handleStripeCheckout() {
+  //   const stripe = await getStripe();
+  //   const { error1 } = await stripe.redirectToCheckout({
+  //     lineItems: [
+  //       {
+  //         price: `${process.env.REACT_APP_PUBLIC_STRIPE_PRICE_ID}`,
+  //         quantity: 1,
+  //       },
+  //     ],
+  //     mode: 'payment',
+  //     successUrl: `http://localhost:3000/success`,
+  //     cancelUrl: `http://localhost:3000/cancel`,
+  //     customerEmail: user?.email,
+  //   });
+  // }
+
   return (
     <main>
       <Helmet>
@@ -616,7 +662,9 @@ export const Apps = () => {
               {resultsHome.length > 0 ? (
                 dropdownList
               ) : (
-                <span className="search-no-apps">No apps found :(</span>
+                <span className="search-no-apps">
+                  No NGL questions found :(
+                </span>
               )}
             </ul>
           </div>
@@ -628,8 +676,10 @@ export const Apps = () => {
         <section className="container-topics">
           <Link to="/">
             <Button
-              primary={!topicIdParam && true}
-              secondary={topicIdParam && true}
+              backgroundColor={!topicIdParam ? 'rgb(255, 229, 217)' : 'white'}
+              // primary={!topicIdParam && true}
+              // secondary={topicIdParam && true}
+              secondary
               label="All NGL questions"
             />
           </Link>
@@ -691,46 +741,74 @@ export const Apps = () => {
           </form>
         </div>
       </section>
-      {(customer && topicIdParam === 1) || topicIdParam !== 1 ? (
-        apps.data ? (
-          <section className="container-scroll">
-            <InfiniteScroll
-              dataLength={apps.data.length}
-              next={fetchApps}
-              hasMore={apps.hasMore} // Replace with a condition based on your data source
-              loader={<p>Loading...</p>}
-              endMessage={<p>No more data to load.</p>}
-              className={`container-cards ${listView ? 'list' : 'grid'}`}
-            >
-              {apps.data.map((app) => {
-                return (
-                  <Card
-                    listCard={listView}
-                    id={app.id}
-                    title={app.title}
-                    description={app.description}
-                    url={app.url}
-                    urlImage="message"
-                    topic={app.topicTitle}
-                    topicId={app.topic_id}
-                    pricingType={app.pricing_type}
-                    isFavorite={favorites.some((x) => x.id === app.id)}
-                    addFavorite={(event) => addFavorite(app.id)}
-                    deleteBookmark={() => handleDeleteBookmarks(app.id)}
-                    bookmarkOnClick={() => {
-                      setOpenModal(true);
-                      setModalTitle('Sign up to add bookmarks');
-                    }}
-                  />
-                );
-              })}
-            </InfiniteScroll>
-          </section>
-        ) : (
-          <Loading />
-        )
+      {topicIdParam === '1' && !user ? (
+        <div className="container-details upgrade">
+          <div>
+            <h2>🔥 Create an account and upgrade</h2>
+            <p>
+              To browse and search <strong>NGL bot messages</strong>
+            </p>
+          </div>
+          <div>
+            <Link to="/signup">
+              <Button primary label="Create an account or log in 👌" />
+            </Link>
+          </div>
+        </div>
+      ) : topicIdParam === '1' && user && !customer ? (
+        <div className="container-details upgrade">
+          <div>
+            <h2>🔥 You need to upgrade</h2>
+            <p>
+              To browse and search <strong>NGL bot messages</strong>
+            </p>
+          </div>
+          <div>
+            <Button
+              // eslint-disable-next-line react/jsx-no-bind
+              onClick={() => handleStripeCheckout(user?.email)}
+              primary
+              label="$6.99 (one-time payment) 👌"
+            />
+          </div>
+        </div>
+      ) : apps.data ? (
+        <section className="container-scroll">
+          <InfiniteScroll
+            dataLength={apps.data.length}
+            next={fetchApps}
+            hasMore={apps.hasMore} // Replace with a condition based on your data source
+            loader={<p>Loading...</p>}
+            endMessage={<p>No more data to load.</p>}
+            className={`container-cards ${listView ? 'list' : 'grid'}`}
+          >
+            {apps.data.map((app) => {
+              return (
+                <Card
+                  listCard={listView}
+                  id={app.id}
+                  title={app.title}
+                  description={app.description}
+                  url={app.url}
+                  urlImage="message"
+                  topic={app.topicTitle}
+                  topicId={app.topic_id}
+                  pricingType={app.pricing_type}
+                  isFavorite={favorites.some((x) => x.id === app.id)}
+                  addFavorite={(event) => addFavorite(app.id)}
+                  deleteBookmark={() => handleDeleteBookmarks(app.id)}
+                  bookmarkOnClick={() => {
+                    setOpenModal(true);
+                    setModalTitle('Sign up to add bookmarks');
+                  }}
+                  buttonOnClick={() => handleStripeCheckout(user?.email)}
+                />
+              );
+            })}
+          </InfiniteScroll>
+        </section>
       ) : (
-        ''
+        <Loading />
       )}
       <Modal title={modalTitle} open={openModal} toggle={toggleModal}>
         <Link to="/signup">

@@ -11,10 +11,10 @@ export const StripeCancel = () => {
         <title>Stripe Cancel</title>
       </Helmet>
       <main>
-        <h1 className="hero-header">Stripe Cancel</h1>
-        <p>Oops... </p>
-        <Link to="/prompts">
-          <Button label="Go to Prompts page" />
+        <h1 className="hero-header">Oops...</h1>
+        <p>Some payment issue</p>
+        <Link to="/">
+          <Button secondary label="Go to main page" />
         </Link>
       </main>
     </>

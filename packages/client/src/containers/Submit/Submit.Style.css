@@ -12,3 +12,7 @@
 .btn-add-prompt {
   margin-top: 1rem;
 }
+
+.form-label {
+  max-width: 40rem;
+}

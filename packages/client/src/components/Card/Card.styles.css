@@ -169,3 +169,12 @@ h2.list-card {
   filter: blur(10px);
   -webkit-filter: blur(10px);
 }
+
+.container-blurred {
+  display: flex;
+  align-items: center;
+}
+
+a.absolute {
+  position: absolute;
+}

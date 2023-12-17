@@ -11,6 +11,8 @@ export const Faq = () => {
       </Helmet>
       <main>
         <h1 className="hero-header">FAQ</h1>
+        <h2>Support</h2>
+        <p>Email agorh @ icloud.com for support or payment issues.</p>
         <h2>What is NGL questions website?</h2>
         <p>
           NGL questions is the largest database of bot/fake messages from NGL

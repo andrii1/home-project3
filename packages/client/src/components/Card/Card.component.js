@@ -14,6 +14,7 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import appImage from '../../assets/images/app-placeholder.svg';
 // import appImage from '../../../public/assets/images/small-screenshot.png';
 import { useUserContext } from '../../userContext';
+import { blurredQuestions } from '../../utils/blurredQuestions';
 
 import './Card.styles.css';
 
@@ -33,8 +34,10 @@ export const Card = ({
   addFavorite,
   deleteBookmark,
   bookmarkOnClick,
+  buttonOnClick,
 }) => {
   const { user, customer } = useUserContext();
+
   if (smallCard) {
     return (
       <Link
@@ -57,6 +60,97 @@ export const Card = ({
       </Link>
     );
   }
+  if (!customer && topicId === 1) {
+    return (
+      <div className={listCard ? 'card-list' : 'card-category'}>
+        <div
+          className={`card-image ${listCard ? 'list' : ''}`}
+          style={{
+            backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/${urlImage}.png )`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: `${listCard ? '80px' : '100px'}`,
+          }}
+        />
+        <div className={`card-body ${listCard ? 'list' : ''}`}>
+          <div className="card-header">
+            <div className="card-title">
+              <div className="container-blurred">
+                <h2 className={`${listCard ? 'list-card' : ''} blur`}>
+                  {
+                    blurredQuestions[
+                      Math.floor(Math.random() * blurredQuestions.length)
+                    ]
+                  }
+                </h2>
+                {user ? (
+                  <Button // eslint-disable-next-line react/jsx-no-bind
+                    onClick={buttonOnClick}
+                    label="See bot questions 👀"
+                    size="small"
+                    primary
+                    className="absolute"
+                  />
+                ) : (
+                  <Link key={id} to="/signup" className="absolute">
+                    <Button // eslint-disable-next-line react/jsx-no-bind
+                      label="🔒 Sign up & upgrade"
+                      size="small"
+                      primary
+                    />
+                  </Link>
+                )}
+              </div>
+            </div>
+            {/* <Badge label={pricingType} size="small" /> */}
+          </div>
+          {description && (
+            <div className="card-description">
+              {`${description.split(' ').slice(0, 15).join(' ')}...`}
+            </div>
+          )}
+          <div className="topics-bookmark">
+            <Link to={`/questions/topic/${topicId}`}>
+              <Button
+                secondary
+                backgroundColor="rgb(255, 229, 217)"
+                label={topic}
+                size="small"
+              />
+            </Link>
+
+            {user && isFavorite ? (
+              <button
+                type="button"
+                onClick={deleteBookmark}
+                onKeyDown={deleteBookmark}
+                className="button-bookmark"
+              >
+                <FontAwesomeIcon icon={faHeartSolid} size="lg" />
+              </button>
+            ) : user ? (
+              <button
+                type="button"
+                onClick={addFavorite}
+                onKeyDown={addFavorite}
+                className="button-bookmark"
+              >
+                <FontAwesomeIcon icon={faHeart} size="lg" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={bookmarkOnClick}
+                onKeyDown={addFavorite}
+                className="button-bookmark"
+              >
+                <FontAwesomeIcon icon={faHeart} size="lg" />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={listCard ? 'card-list' : 'card-category'}>
@@ -74,13 +168,7 @@ export const Card = ({
         <div className="card-header">
           <div className="card-title">
             <Link to={`/questions/${id}`} target="_blank">
-              <h2
-                className={`${listCard ? 'list-card' : ''} ${
-                  !customer && topicId === 1 ? 'blur' : ''
-                }`}
-              >
-                {title}
-              </h2>
+              <h2 className={`${listCard ? 'list-card' : ''}`}>{title}</h2>
             </Link>
             <Link to={`/apps/${id}`} target="_blank">
               <FontAwesomeIcon
@@ -100,7 +188,12 @@ export const Card = ({
         )}
         <div className="topics-bookmark">
           <Link to={`/questions/topic/${topicId}`}>
-            <Button label={topic} size="small" />
+            <Button
+              secondary
+              backgroundColor="rgb(255, 229, 217)"
+              label={topic}
+              size="small"
+            />
           </Link>
 
           {user && isFavorite ? (
@@ -195,6 +288,7 @@ Card.propTypes = {
   addFavorite: PropTypes.func,
   deleteBookmark: PropTypes.func,
   bookmarkOnClick: PropTypes.func,
+  buttonOnClick: PropTypes.func,
 };
 
 Card.defaultProps = {
@@ -213,4 +307,5 @@ Card.defaultProps = {
   addFavorite: undefined,
   deleteBookmark: undefined,
   bookmarkOnClick: undefined,
+  buttonOnClick: undefined,
 };

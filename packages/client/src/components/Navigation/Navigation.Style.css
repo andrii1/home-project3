@@ -84,7 +84,7 @@ ul li,
   z-index: 999;
   background: white;
   max-width: 100%;
-  top: 3.5rem;
+  top: 5rem;
   right: 0px;
   /* bottom: 0px; */
   left: 0px;
@@ -109,7 +109,7 @@ ul li,
 
 .navigation-mobile .img-logo {
   padding: 0;
-  max-width: 8rem;
+  max-width: 6rem;
   margin-top: 0.3rem;
 }
 
@@ -132,7 +132,7 @@ ul li,
 
 .submit {
   font-weight: bold;
-  color: #b5838d !important;
+  color: #000 !important;
 }
 
 .input-search-navigation {
@@ -153,6 +153,11 @@ ul li,
 
 .dropdown-search-modal ul li {
   margin-bottom: 1rem;
+}
+
+.search-icon-modal {
+  position: absolute;
+  padding: 1rem;
 }
 
 .img-logo {
