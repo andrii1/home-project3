@@ -291,14 +291,8 @@ const getQuestionById = async (id) => {
   }
   try {
     const app = await knex('questions')
-      .select(
-        'questions.*',
-        'topics.title as topicTitle',
-        'topics.category_id as category_id',
-        'categories.title as categoryTitle',
-      )
+      .select('questions.*', 'topics.title as topicTitle')
       .join('topics', 'questions.topic_id', '=', 'topics.id')
-      .join('categories', 'topics.category_id', '=', 'categories.id')
       .where({ 'questions.id': id });
     if (app.length === 0) {
       throw new HttpError(`incorrect entry with the id of ${id}`, 404);

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
@@ -8,6 +10,7 @@ import { Card } from '../../components/Card/Card.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../components/Modal/Modal.Component';
 import iconCopy from '../../assets/images/icons8-copy-24.png';
+import { handleStripeCheckout } from '../../utils/handleStripeCheckout';
 import {
   faEnvelope,
   faLink,
@@ -121,7 +124,7 @@ export const AppView = () => {
   const [similarApps, setSimilarApps] = useState([]);
   const [comments, setComments] = useState([]);
   const [error, setError] = useState('');
-  const { user } = useUserContext();
+  const { user, customer } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
   const [comment, setComment] = useState('');
@@ -130,7 +133,7 @@ export const AppView = () => {
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   useEffect(() => {
     async function fetchSingleApp(appId) {
-      const response = await fetch(`${apiURL()}/apps/${appId}`);
+      const response = await fetch(`${apiURL()}/questions/${appId}`);
       const appResponse = await response.json();
       setApp(appResponse[0]);
     }
@@ -331,7 +334,7 @@ export const AppView = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        app_id: appId,
+        question_id: appId,
       }),
     });
     if (response.ok) {
@@ -357,22 +360,22 @@ export const AppView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${String(app.title).substring(0, 50)} - AI Apps`}</title>
+        <title>{`${String(app.title).substring(0, 50)} - NGL questions`}</title>
         <meta
           name="description"
-          content={`Top AI Apps for ${app.topicTitle} and ${app.categoryTitle}`}
+          content={`NGL questions ${app.topicTitle} - overview`}
         />
       </Helmet>
       <main>
         <section className="container-appview">
-          <h1 className="hero-header">{app.title}</h1>
           <img
             className="appview-image"
-            alt={`${app.title} screenshot`}
-            src={`http://res.cloudinary.com/dgarvanzw/image/upload/q_auto,f_auto/apps_ai/${app.url_image}.png`}
+            alt={`${app.title} NGL message`}
+            src="http://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/message.png"
           />
+          <h1 className="hero-header">{app.title}</h1>
 
-          <div className="container-bookmark">
+          {/* <div className="container-bookmark">
             <Link to={app.url} target="_blank">
               <Button
                 primary
@@ -416,64 +419,64 @@ export const AppView = () => {
                 </button>
               )}
             </div>
-          </div>
+          </div> */}
           <div className="container-description">
             <div className="container-title">
-              <h3>What is {app.title}?</h3>
-              <div className="container-rating">
-                Rating
-                {user &&
-                allRatings.some((rating) => rating.app_id === app.id) &&
-                ratings.some((rating) => rating.id === app.id) ? (
-                  <button
-                    type="button"
-                    className="button-rating"
-                    onClick={(event) => deleteRating(app.id)}
-                  >
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {
-                      allRatings.filter((rating) => rating.app_id === app.id)
-                        .length
-                    }
-                  </button>
-                ) : user ? (
-                  <button
-                    type="button"
-                    className="button-rating"
-                    onClick={(event) => addRating(app.id)}
-                  >
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {
-                      allRatings.filter((rating) => rating.app_id === app.id)
-                        .length
-                    }
-                  </button>
+              <p>
+                {app.topic_id === 1 ? (
+                  <>
+                    <i>&quot;{app.title}&quot;</i> is a{' '}
+                    <strong>bot NGL message!</strong> Do not upgrade to see who
+                    sent this message!
+                  </>
                 ) : (
-                  <button
-                    type="button"
-                    className="button-rating"
-                    onClick={() => {
-                      setOpenModal(true);
-                      setModalTitle('Sign up to vote');
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {
-                      allRatings.filter((rating) => rating.app_id === app.id)
-                        .length
-                    }
-                  </button>
+                  'Just an idea for an NGL question 🤷‍♂️'
                 )}
-                {/* <button type="button" className="button-rating">
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  10
-                </button> */}
-              </div>
+              </p>
             </div>
-            <p>{app.description}</p>
+            {user &&
+            allRatings.some((rating) => rating.question_id === app.id) &&
+            ratings.some((rating) => rating.id === app.id) ? (
+              <div
+                className="container-rating"
+                onClick={(event) => deleteRating(app.id)}
+              >
+                <FontAwesomeIcon size="xl" icon={faHeartSolid} />
+                {
+                  allRatings.filter((rating) => rating.question_id === app.id)
+                    .length
+                }
+              </div>
+            ) : user ? (
+              <div
+                className="container-rating"
+                onClick={(event) => addRating(app.id)}
+              >
+                <FontAwesomeIcon size="xl" icon={faHeart} />
+
+                {
+                  allRatings.filter((rating) => rating.question_id === app.id)
+                    .length
+                }
+              </div>
+            ) : (
+              <div
+                className="container-rating"
+                onClick={() => {
+                  setOpenModal(true);
+                  setModalTitle('Sign up add likes');
+                }}
+              >
+                <FontAwesomeIcon size="xl" icon={faHeart} />
+                {
+                  allRatings.filter((rating) => rating.question_id === app.id)
+                    .length
+                }
+              </div>
+            )}
           </div>
           <div className="container-details">
-            <div className="container-tags">
+            {/* <div className="container-tags">
               <div className="badges">
                 <p>Pricing: </p>{' '}
                 <div>
@@ -481,20 +484,20 @@ export const AppView = () => {
                 </div>
               </div>
               <p>Edit app</p>
-            </div>
+            </div> */}
             <div className="container-tags">
               <div className="badges">
-                <p>Tagged: </p>
+                <p>Tag: </p>
                 <div>
                   <Badge secondary label={app.topicTitle} size="small" />
                 </div>
               </div>
-              <div className="badges">
+              {/* <div className="badges">
                 <p>Category: </p>
                 <div>
                   <Badge secondary label={app.categoryTitle} size="small" />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           {/* <div className="container-related-searches">
@@ -523,36 +526,68 @@ export const AppView = () => {
               className="button-copy"
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `https://www.Apphunt.me/Apps/${app.id}`,
+                  `https://www.nglquestions.com/questions/${app.title}`,
                 );
               }}
             />
-            <FacebookShareButton url={`/Apps/${app.id}`}>
+            <FacebookShareButton url={`/questions/${app.id}`}>
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.Apphunt.me/Apps/${app.id}`}
-              title={`Check out this GPT App: '${app.title}'`}
+              url={`https://www.nqlquestions.com/questions/${app.id}`}
+              title={`Check out this NGL question: '${app.title}'`}
               hashtags={['Apps']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
-            <LinkedinShareButton url={`https://www.Apphunt.me/Apps/${app.id}`}>
+            <LinkedinShareButton
+              url={`https://www.nqlquestions.com/questions/${app.id}`}
+            >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
-              subject="Check out this GPT App!"
-              body={`This GPT App is great: '${app.title}'`}
-              url={`https://www.Apphunt.me/Apps/${app.id}`}
+              subject="Check out this NGL question!"
+              body={`This NGL question is fun: '${app.title}'`}
+              url={`https://www.nqlquestions.com/questions/${app.id}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>
           </div>
+          {!user && (
+            <div className="container-details cta">
+              <div>
+                <h2>🔥 Create a free account</h2>
+                <p>To see more NGL messages</p>
+              </div>
+              <div>
+                <Link to="/signup">
+                  <Button primary label="Create my account 👌" />
+                </Link>
+              </div>
+            </div>
+          )}
+          {user && !customer && (
+            <div className="container-details cta">
+              <div>
+                <h2>🔥 Upgrade</h2>
+                <p>
+                  To browse and search <strong>NGL bot questions</strong>
+                </p>
+              </div>
+              <div>
+                <Button
+                  onClick={() => handleStripeCheckout(user?.email)}
+                  primary
+                  label="Upgrade 👌"
+                />
+              </div>
+            </div>
+          )}
           <div className="container-comments">
             {comments.length === 0 && (
               <div>
-                <i>No comments for this App. </i>
-                {user && <i>Add first one below.</i>}
+                <i>No comments for this NGL question. </i>
+                {user && <i>Add the first one below.</i>}
               </div>
             )}
             {comments.length > 0 &&
@@ -611,17 +646,7 @@ export const AppView = () => {
               </div>
             )}
           </div>
-          <div className="container-details cta">
-            <div>
-              <h2>🔥 Create a free account</h2>
-              <p>Bookmark you favorite AI apps</p>
-            </div>
-            <div>
-              <Link to="/signup">
-                <Button primary label="Create my account 👌" />
-              </Link>
-            </div>
-          </div>
+
           {similarApps.length > 0 && (
             <div className="container-alternatives">
               <h3>🔎 Similar to {app.title}</h3>

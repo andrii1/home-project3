@@ -20,10 +20,10 @@ const getRatingsByUserId = async (token) => {
   }
 
   try {
-    const ratings = await knex('apps')
-      .select('apps.*', 'ratings.id as ratingsID')
+    const ratings = await knex('questions')
+      .select('questions.*', 'ratings.id as ratingsID')
       .leftJoin('ratings', function () {
-        this.on('apps.id', '=', 'ratings.app_id');
+        this.on('questions.id', '=', 'ratings.question_id');
       })
       .where('ratings.user_id', '=', `${user.id}`);
 
@@ -47,13 +47,13 @@ const getRatingsByAppId = async (token, appsId) => {
   }
 
   try {
-    const ratings = await knex('apps')
-      .select('apps.*', 'ratings.id as ratingsID')
+    const ratings = await knex('questions')
+      .select('questions.*', 'ratings.id as ratingsID')
       .leftJoin('ratings', function () {
-        this.on('apps.id', '=', 'ratings.app_id');
+        this.on('questions.id', '=', 'ratings.questions_id');
       })
       .where('ratings.user_id', '=', `${user.id}`)
-      .where('ratings.app_id', '=', `${appsId}`);
+      .where('ratings.questions_id', '=', `${appsId}`);
 
     if (ratings.length === 0) {
       throw new HttpError(
@@ -78,7 +78,7 @@ const createratings = async (token, body) => {
     }
     await knex('ratings').insert({
       user_id: user.id,
-      app_id: body.app_id,
+      question_id: body.question_id,
     });
     return {
       successful: true,
@@ -98,7 +98,7 @@ const deleteratings = async (token, ratingsId) => {
   }
   try {
     const deletedFav = await knex('ratings')
-      .where({ app_id: ratingsId, user_id: user.id })
+      .where({ question_id: ratingsId, user_id: user.id })
       .del();
     if (deletedFav === 0) {
       throw new HttpError('The ratings ID you provided does not exist.', 400);
