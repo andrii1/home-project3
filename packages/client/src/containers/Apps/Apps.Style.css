@@ -27,6 +27,10 @@ main {
   .container-cards.grid {
     grid-template-columns: repeat(1, 1fr) !important;
   }
+  .container-filters {
+    justify-content: center !important;
+    padding-right: 0rem !important;
+  }
 }
 
 .hero form {

@@ -288,7 +288,7 @@ ul.topics-list {
   .navigation .menu ul li,
   .navigation .nav-buttons ul li {
     margin-right: 0rem;
-    margin-bottom: 0.4rem;
+    /* margin-bottom: 0.4rem; */
   }
   .hero-header {
     display: none;

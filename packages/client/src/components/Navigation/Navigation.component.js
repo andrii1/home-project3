@@ -190,26 +190,9 @@ export const Navigation = () => {
                 }`}
               >
                 <li>
-                  <NavLink to="/categories" className="nav-link">
-                    Categories
+                  <NavLink to="/topics" className="nav-link">
+                    Topics
                   </NavLink>
-                </li>
-                <li>
-                  {user ? (
-                    <NavLink to="/apps/new" className="login submit">
-                      Submit
-                    </NavLink>
-                  ) : (
-                    <NavLink
-                      onClick={() => {
-                        setOpenModal(true);
-                        setModalTitle('Do you want to add your prompts?');
-                      }}
-                      className="login submit"
-                    >
-                      Submit an app
-                    </NavLink>
-                  )}
                 </li>
               </ul>
             </li>
@@ -224,29 +207,43 @@ export const Navigation = () => {
             <li>
               {user ? (
                 <div className="container-logged-in">
-                  <Button
-                    className="hamburger-menu-button"
-                    onClick={toggleHamburgerUser}
-                    primary
-                  >
-                    <FontAwesomeIcon
-                      icon={hamburgerUserOpen ? faXmark : faUser}
-                    />
-                  </Button>
+                  {hamburgerUserOpen && (
+                    <Button
+                      className="hamburger-menu-button close"
+                      onClick={toggleHamburgerUser}
+                      primary
+                    >
+                      <FontAwesomeIcon
+                        onClick={toggleHamburgerUser}
+                        icon={faXmark}
+                      />
+                    </Button>
+                  )}
+
+                  {!hamburgerUserOpen && (
+                    <ProfileImage onClick={toggleHamburgerUser} name={name} />
+                  )}
                   <div
                     className={`menu-user ${
                       hamburgerUserOpen ? 'menu-open' : 'menu-closed'
                     }`}
                   >
-                    {name}
+                    <li>
+                      {!customer ? (
+                        <Button
+                          onClick={() => handleStripeCheckout(user?.email)}
+                          primary
+                          label="Unlock NGL bot messages 👀"
+                        />
+                      ) : (
+                        ''
+                      )}
+                    </li>
                     <NavLink to="/bookmarks" className="login">
                       Bookmarks
                     </NavLink>
-                    <FontAwesomeIcon
-                      onClick={logout}
-                      className="share-icon"
-                      icon={faRightFromBracket}
-                    />
+                    <NavLink to="/apps/new">Submit NGL question</NavLink>
+                    <div onClick={logout}>Logout</div>
                   </div>
                 </div>
               ) : (
@@ -313,7 +310,7 @@ export const Navigation = () => {
                   <NavLink to="/bookmarks" className="login">
                     Bookmarks
                   </NavLink>
-                  <NavLink to="/questions/new">Submit a question</NavLink>
+                  <NavLink to="/questions/new">Submit NGL question</NavLink>
                   <div className="div-logout" onClick={logout}>
                     Logout
                   </div>
