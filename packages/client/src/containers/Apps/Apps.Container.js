@@ -35,6 +35,8 @@ export const Apps = () => {
   const [resultsHome, setResultsHome] = useState([]);
 
   const [topics, setTopics] = useState([]);
+  const [allRatings, setAllRatings] = useState([]);
+  const [ratings, setRatings] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [categories, setCategories] = useState([]);
@@ -622,6 +624,68 @@ export const Apps = () => {
     deleteFavorites();
   };
 
+  const fetchAllRatings = useCallback(async () => {
+    const url = `${apiURL()}/ratings`;
+    const response = await fetch(url);
+    const ratingsData = await response.json();
+    setAllRatings(ratingsData);
+  }, []);
+
+  useEffect(() => {
+    fetchAllRatings();
+  }, [fetchAllRatings]);
+
+  const fetchRatings = useCallback(async () => {
+    const url = `${apiURL()}/ratings`;
+    const response = await fetch(url, {
+      headers: {
+        token: `token ${user?.uid}`,
+      },
+    });
+    const ratingsData = await response.json();
+
+    if (Array.isArray(ratingsData)) {
+      setRatings(ratingsData);
+    } else {
+      setRatings([]);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetchRatings();
+  }, [fetchRatings]);
+
+  const addRating = async (appId) => {
+    const response = await fetch(`${apiURL()}/ratings`, {
+      method: 'POST',
+      headers: {
+        token: `token ${user?.uid}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        question_id: appId,
+      }),
+    });
+    if (response.ok) {
+      fetchRatings();
+      fetchAllRatings();
+    }
+  };
+
+  const deleteRating = async (appId) => {
+    const response = await fetch(`${apiURL()}/ratings/${appId}`, {
+      method: 'DELETE',
+      headers: {
+        token: `token ${user?.uid}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      fetchRatings();
+      fetchAllRatings();
+    }
+  };
+
   // async function handleStripeCheckout() {
   //   const stripe = await getStripe();
   //   const { error1 } = await stripe.redirectToCheckout({
@@ -797,12 +861,20 @@ export const Apps = () => {
                   topic={app.topicTitle}
                   topicId={app.topic_id}
                   pricingType={app.pricing_type}
-                  isFavorite={favorites.some((x) => x.id === app.id)}
-                  addFavorite={(event) => addFavorite(app.id)}
-                  deleteBookmark={() => handleDeleteBookmarks(app.id)}
-                  bookmarkOnClick={() => {
+                  isFavorite={
+                    allRatings.some(
+                      (rating) => rating.question_id === app.id,
+                    ) && ratings.some((rating) => rating.id === app.id)
+                  }
+                  numberOfRatings={
+                    allRatings.filter((rating) => rating.question_id === app.id)
+                      .length
+                  }
+                  addRating={(event) => addRating(app.id)}
+                  deleteRating={() => deleteRating(app.id)}
+                  ratingOnClick={() => {
                     setOpenModal(true);
-                    setModalTitle('Sign up to add bookmarks');
+                    setModalTitle('Sign up add likes');
                   }}
                   buttonOnClick={() => handleStripeCheckout(user?.email)}
                 />

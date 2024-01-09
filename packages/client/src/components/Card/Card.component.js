@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
@@ -32,10 +34,11 @@ export const Card = ({
   smallCard = true,
   listCard = false,
   isFavorite,
-  addFavorite,
-  deleteBookmark,
-  bookmarkOnClick,
+  addRating,
+  deleteRating,
+  ratingOnClick,
   buttonOnClick,
+  numberOfRatings,
 }) => {
   const { user, customer } = useUserContext();
 
@@ -170,6 +173,23 @@ export const Card = ({
           </Link>
 
           {user && isFavorite ? (
+            <div className="container-rating" onClick={deleteRating}>
+              <FontAwesomeIcon size="xl" icon={faHeartSolid} />
+              {numberOfRatings}
+            </div>
+          ) : user ? (
+            <div className="container-rating" onClick={addRating}>
+              <FontAwesomeIcon size="xl" icon={faHeart} />
+              {numberOfRatings}
+            </div>
+          ) : (
+            <div className="container-rating" onClick={ratingOnClick}>
+              <FontAwesomeIcon size="xl" icon={faHeart} />
+              {numberOfRatings}
+            </div>
+          )}
+
+          {/* {user && isFavorite ? (
             <button
               type="button"
               onClick={deleteBookmark}
@@ -196,7 +216,7 @@ export const Card = ({
             >
               <FontAwesomeIcon icon={faHeart} size="lg" />
             </button>
-          )}
+          )} */}
         </div>
       </div>
     </div>
@@ -258,10 +278,11 @@ Card.propTypes = {
   listCard: PropTypes.bool,
   className: PropTypes.string,
   isFavorite: PropTypes.func,
-  addFavorite: PropTypes.func,
-  deleteBookmark: PropTypes.func,
-  bookmarkOnClick: PropTypes.func,
+  addRating: PropTypes.func,
+  deleteRating: PropTypes.func,
+  ratingOnClick: PropTypes.func,
   buttonOnClick: PropTypes.func,
+  numberOfRatings: PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -273,12 +294,13 @@ Card.defaultProps = {
   url: null,
   urlImage: null,
   id: null,
+  numberOfRatings: null,
   smallCard: false,
   listCard: false,
   className: null,
   isFavorite: undefined,
-  addFavorite: undefined,
-  deleteBookmark: undefined,
-  bookmarkOnClick: undefined,
+  addRating: undefined,
+  deleteRating: undefined,
+  ratingOnClick: undefined,
   buttonOnClick: undefined,
 };

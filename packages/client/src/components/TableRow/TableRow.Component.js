@@ -53,11 +53,11 @@ export const TableRow = ({
           >
             <img src={iconCopy} alt="copy" className="icon-copy" />
           </button>
-          <Link to={`../prompts/${id.toString()}`} params={{ id }}>
+          <Link to={`../questions/${id.toString()}`} params={{ id }}>
             <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="lg" />
           </Link>
           <FacebookShareButton
-            url={`https://www.prompt-library.net/prompts/${id}`}
+            url={`https://www.nglquestions.com/question/${id}`}
           >
             <FontAwesomeIcon
               className="share-icon"
@@ -66,7 +66,7 @@ export const TableRow = ({
             />
           </FacebookShareButton>
           <TwitterShareButton
-            url={`https://www.prompt-library.net/prompts/${id}`}
+            url={`https://www.nglquestions.com/question/${id}`}
             title={`Check out this GPT prompt: '${title}'`}
             hashtags={['prompts']}
           >
@@ -77,7 +77,7 @@ export const TableRow = ({
             />
           </TwitterShareButton>
           <LinkedinShareButton
-            url={`https://www.prompt-library.net/prompts/${id}`}
+            url={`https://www.nglquestions.com/question/${id}`}
           >
             <FontAwesomeIcon
               className="share-icon"
