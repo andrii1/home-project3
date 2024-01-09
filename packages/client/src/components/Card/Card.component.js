@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
@@ -120,45 +118,33 @@ export const Card = ({
               />
             </Link>
 
-            {user &&
-            allRatings.some((rating) => rating.question_id === app.id) &&
-            ratings.some((rating) => rating.id === app.id) ? (
-              <div
-                className="container-rating"
-                onClick={(event) => deleteRating(app.id)}
+            {user && isFavorite ? (
+              <button
+                type="button"
+                onClick={deleteBookmark}
+                onKeyDown={deleteBookmark}
+                className="button-bookmark"
               >
-                <FontAwesomeIcon size="xl" icon={faHeartSolid} />
-                {
-                  allRatings.filter((rating) => rating.question_id === app.id)
-                    .length
-                }
-              </div>
+                <FontAwesomeIcon icon={faHeartSolid} size="lg" />
+              </button>
             ) : user ? (
-              <div
-                className="container-rating"
-                onClick={(event) => addRating(app.id)}
+              <button
+                type="button"
+                onClick={addFavorite}
+                onKeyDown={addFavorite}
+                className="button-bookmark"
               >
-                <FontAwesomeIcon size="xl" icon={faHeart} />
-
-                {
-                  allRatings.filter((rating) => rating.question_id === app.id)
-                    .length
-                }
-              </div>
+                <FontAwesomeIcon icon={faHeart} size="lg" />
+              </button>
             ) : (
-              <div
-                className="container-rating"
-                onClick={() => {
-                  setOpenModal(true);
-                  setModalTitle('Sign up add likes');
-                }}
+              <button
+                type="button"
+                onClick={bookmarkOnClick}
+                onKeyDown={addFavorite}
+                className="button-bookmark"
               >
-                <FontAwesomeIcon size="xl" icon={faHeart} />
-                {
-                  allRatings.filter((rating) => rating.question_id === app.id)
-                    .length
-                }
-              </div>
+                <FontAwesomeIcon icon={faHeart} size="lg" />
+              </button>
             )}
           </div>
         </div>
@@ -210,45 +196,33 @@ export const Card = ({
             />
           </Link>
 
-          {user &&
-          allRatings.some((rating) => rating.question_id === app.id) &&
-          ratings.some((rating) => rating.id === app.id) ? (
-            <div
-              className="container-rating"
-              onClick={(event) => deleteRating(app.id)}
+          {user && isFavorite ? (
+            <button
+              type="button"
+              onClick={deleteBookmark}
+              onKeyDown={deleteBookmark}
+              className="button-bookmark"
             >
-              <FontAwesomeIcon size="xl" icon={faHeartSolid} />
-              {
-                allRatings.filter((rating) => rating.question_id === app.id)
-                  .length
-              }
-            </div>
+              <FontAwesomeIcon icon={faHeartSolid} size="lg" />
+            </button>
           ) : user ? (
-            <div
-              className="container-rating"
-              onClick={(event) => addRating(app.id)}
+            <button
+              type="button"
+              onClick={addFavorite}
+              onKeyDown={addFavorite}
+              className="button-bookmark"
             >
-              <FontAwesomeIcon size="xl" icon={faHeart} />
-
-              {
-                allRatings.filter((rating) => rating.question_id === app.id)
-                  .length
-              }
-            </div>
+              <FontAwesomeIcon icon={faHeart} size="lg" />
+            </button>
           ) : (
-            <div
-              className="container-rating"
-              onClick={() => {
-                setOpenModal(true);
-                setModalTitle('Sign up add likes');
-              }}
+            <button
+              type="button"
+              onClick={bookmarkOnClick}
+              onKeyDown={addFavorite}
+              className="button-bookmark"
             >
-              <FontAwesomeIcon size="xl" icon={faHeart} />
-              {
-                allRatings.filter((rating) => rating.question_id === app.id)
-                  .length
-              }
-            </div>
+              <FontAwesomeIcon icon={faHeart} size="lg" />
+            </button>
           )}
         </div>
       </div>
