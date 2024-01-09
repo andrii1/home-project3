@@ -15,6 +15,7 @@ import appImage from '../../assets/images/app-placeholder.svg';
 // import appImage from '../../../public/assets/images/small-screenshot.png';
 import { useUserContext } from '../../userContext';
 import { blurredQuestions } from '../../utils/blurredQuestions';
+import { stringToHash } from '../../utils/stringToHash';
 
 import './Card.styles.css';
 
@@ -76,11 +77,12 @@ export const Card = ({
             <div className="card-title">
               <div className="container-blurred">
                 <h2 className={`${listCard ? 'list-card' : ''} blur`}>
-                  {
+                  {stringToHash(title)}
+                  {/* {
                     blurredQuestions[
                       Math.floor(Math.random() * blurredQuestions.length)
                     ]
-                  }
+                  } */}
                 </h2>
                 {user ? (
                   <Button // eslint-disable-next-line react/jsx-no-bind
@@ -117,35 +119,6 @@ export const Card = ({
                 size="small"
               />
             </Link>
-
-            {user && isFavorite ? (
-              <button
-                type="button"
-                onClick={deleteBookmark}
-                onKeyDown={deleteBookmark}
-                className="button-bookmark"
-              >
-                <FontAwesomeIcon icon={faHeartSolid} size="lg" />
-              </button>
-            ) : user ? (
-              <button
-                type="button"
-                onClick={addFavorite}
-                onKeyDown={addFavorite}
-                className="button-bookmark"
-              >
-                <FontAwesomeIcon icon={faHeart} size="lg" />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={bookmarkOnClick}
-                onKeyDown={addFavorite}
-                className="button-bookmark"
-              >
-                <FontAwesomeIcon icon={faHeart} size="lg" />
-              </button>
-            )}
           </div>
         </div>
       </div>
