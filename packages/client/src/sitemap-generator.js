@@ -9,7 +9,7 @@ const Sitemap = require('react-router-sitemap').default;
 async function generateSitemap() {
   try {
     /* Prompts */
-    const response = await fetch(`http://localhost:5001/api/apps/`);
+    const response = await fetch(`http://localhost:5001/api/questions/`);
     const promptsResult = await response.json();
     const prompts = promptsResult.sort((a, b) => a.id - b.id);
     const idMap = [];
@@ -20,13 +20,13 @@ async function generateSitemap() {
     const topics = topicsResult.sort((a, b) => a.id - b.id);
     const idMapTopics = [];
 
-    /* Categories */
-    const responseCategories = await fetch(
-      `http://localhost:5001/api/categories`,
-    );
-    const categoriesResult = await responseCategories.json();
-    const categories = categoriesResult.sort((a, b) => a.id - b.id);
-    const idMapCategories = [];
+    // /* Categories */
+    // const responseCategories = await fetch(
+    //   `http://localhost:5001/api/categories`,
+    // );
+    // const categoriesResult = await responseCategories.json();
+    // const categories = categoriesResult.sort((a, b) => a.id - b.id);
+    // const idMapCategories = [];
 
     prompts.forEach((prompt) => {
       idMap.push({ id: prompt.id });
@@ -36,19 +36,18 @@ async function generateSitemap() {
       idMapTopics.push({ topicIdParam: topic.id });
     });
 
-    categories.forEach((category) => {
-      idMapCategories.push({ categoryIdParam: category.id });
-    });
+    // categories.forEach((category) => {
+    //   idMapCategories.push({ categoryIdParam: category.id });
+    // });
 
     const paramsConfig = {
-      '/apps/:id': idMap,
-      '/apps/topic/:topicIdParam': idMapTopics,
-      '/apps/category/:categoryIdParam': idMapCategories,
+      '/questions/:id': idMap,
+      '/questions/topic/:topicIdParam': idMapTopics,
     };
 
     return new Sitemap(router)
       .applyParams(paramsConfig)
-      .build('https://www.appswithai.xyz')
+      .build('https://www.nglquestions.com')
       .save('./public/sitemap.xml');
   } catch (e) {
     console.log(e);

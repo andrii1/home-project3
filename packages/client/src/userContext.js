@@ -38,7 +38,7 @@ export function UserProvider({ children }) {
   }, [user?.uid]);
   const fetchIfCustomer = useCallback(async () => {
     const url = `${apiURL()}/stripe/customers?userEmail=${user?.email}`;
-    console.log(url);
+
     const response = await fetch(url);
     const json = await response.json();
     if (!json.data.length) {
@@ -46,7 +46,7 @@ export function UserProvider({ children }) {
     }
     return setCustomer(true);
   }, [user?.email]);
-  console.log(user?.email);
+
   useEffect(() => {
     if (user) {
       fetchUserName();
