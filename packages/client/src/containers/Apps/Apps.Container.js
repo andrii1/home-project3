@@ -576,15 +576,13 @@ export const Apps = () => {
       },
     });
     const favoritesData = await response.json();
-    console.log(favoritesData);
+
     if (Array.isArray(favoritesData)) {
       setFavorites(favoritesData);
     } else {
       setFavorites([]);
     }
   }, [user]);
-
-  console.log('favorites', favorites);
 
   useEffect(() => {
     fetchFavorites();
@@ -601,7 +599,7 @@ export const Apps = () => {
         question_id: appId,
       }),
     });
-    console.log('test');
+
     if (response.ok) {
       fetchFavorites();
     }
