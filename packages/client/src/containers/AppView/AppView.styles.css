@@ -129,6 +129,10 @@
   gap: 0.3rem;
 }
 
+.hero-title {
+  margin-top: 0rem;
+}
+
 @media only screen and (max-width: 992px) {
   .container-appview {
     width: 90%;

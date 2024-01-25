@@ -360,10 +360,12 @@ export const AppView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${String(app.title).substring(0, 50)} - NGL questions`}</title>
+        <title>{`${String(app.title).substring(0, 50)} - ${
+          app.topic_id === 1 ? 'bot NGL questions' : 'NGL questions'
+        }`}</title>
         <meta
           name="description"
-          content={`NGL questions ${app.topicTitle} - overview`}
+          content={`NGL questions - ${app.topicTitle} - overview`}
         />
       </Helmet>
       <main>
@@ -373,7 +375,7 @@ export const AppView = () => {
             alt={`${app.title} NGL message`}
             src="http://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/message.png"
           />
-          <h1 className="hero-header">{app.title}</h1>
+          <h1 className="hero-title">{app.title}</h1>
 
           {/* <div className="container-bookmark">
             <Link to={app.url} target="_blank">
@@ -425,12 +427,14 @@ export const AppView = () => {
               <p>
                 {app.topic_id === 1 ? (
                   <>
-                    <i>&quot;{app.title}&quot;</i> is a{' '}
+                    🛑&nbsp;<i>&quot;{app.title}&quot;</i> is a{' '}
                     <strong>bot NGL message!</strong> Do not upgrade to see who
                     sent this message!
                   </>
                 ) : (
-                  'Just an idea for an NGL question 🤷‍♂️'
+                  <>
+                    🥳&nbsp;<i>This is NOT a bot NGL message.</i>
+                  </>
                 )}
               </p>
             </div>
@@ -571,7 +575,7 @@ export const AppView = () => {
               <div>
                 <h2>🔥 Upgrade</h2>
                 <p>
-                  To browse and search <strong>NGL bot questions</strong>
+                  To browse and search <strong>all NGL bot questions</strong>
                 </p>
               </div>
               <div>
