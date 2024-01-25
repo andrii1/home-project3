@@ -872,7 +872,7 @@ export const Apps = () => {
                   deleteRating={() => deleteRating(app.id)}
                   ratingOnClick={() => {
                     setOpenModal(true);
-                    setModalTitle('Sign up add likes');
+                    setModalTitle('Sign up to like');
                   }}
                   buttonOnClick={() => handleStripeCheckout(user?.email)}
                 />

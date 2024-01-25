@@ -468,7 +468,7 @@ export const AppView = () => {
                 className="container-rating"
                 onClick={() => {
                   setOpenModal(true);
-                  setModalTitle('Sign up add likes');
+                  setModalTitle('Sign up to like');
                 }}
               >
                 <FontAwesomeIcon size="xl" icon={faHeart} />
