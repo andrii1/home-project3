@@ -19,13 +19,13 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCxoiComDc-Z0AopTa4bP6fhWF9Z1jQr7w',
-  authDomain: 'apps-with-ai.firebaseapp.com',
-  projectId: 'apps-with-ai',
-  storageBucket: 'apps-with-ai.appspot.com',
-  messagingSenderId: '116758707192',
-  appId: '1:116758707192:web:29e51c7003df988b63340d',
-  measurementId: 'G-ZLPFT1PR3S',
+  apiKey: 'AIzaSyAdIhWpadIiaua1qd1NQ3Hmo4ncYS4zozM',
+  authDomain: 'ngl-questions.firebaseapp.com',
+  projectId: 'ngl-questions',
+  storageBucket: 'ngl-questions.appspot.com',
+  messagingSenderId: '753639250771',
+  appId: '1:753639250771:web:eb01561de0247998d61fa6',
+  measurementId: 'G-W9GMR491Y2',
 };
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
