@@ -10,8 +10,8 @@ export const handleStripeCheckout = async (email) => {
       },
     ],
     mode: 'payment',
-    successUrl: `https://www.nglquestions.com/success`,
-    cancelUrl: `https://www.nglquestions.com/cancel`,
+    successUrl: `https://www.nglbotquestions.com/success`,
+    cancelUrl: `https://www.nglbotquestions.com/cancel`,
     customerEmail: email,
   });
 };

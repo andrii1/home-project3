@@ -104,7 +104,7 @@ export const Bookmarks = () => {
         <title>Bookmarks</title>
       </Helmet>
       <main>
-        <h1 className="hero-header">Bookmarks</h1>
+        <h1 className="hero-title">Bookmarks</h1>
         {favoritesList}
       </main>
     </>

@@ -242,7 +242,7 @@ export const Navigation = () => {
                     <NavLink to="/bookmarks" className="login">
                       Bookmarks
                     </NavLink>
-                    <NavLink to="/apps/new">Submit NGL question</NavLink>
+                    <NavLink to="/questions/new">Submit NGL question</NavLink>
                     <div onClick={logout}>Logout</div>
                   </div>
                 </div>
