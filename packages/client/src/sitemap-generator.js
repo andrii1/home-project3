@@ -47,7 +47,7 @@ async function generateSitemap() {
 
     return new Sitemap(router)
       .applyParams(paramsConfig)
-      .build('https://www.nglbotquestions.com')
+      .build('https://www.nglquestions.com')
       .save('./public/sitemap.xml');
   } catch (e) {
     console.log(e);
