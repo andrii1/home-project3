@@ -540,7 +540,7 @@ export const Apps = () => {
       .map((item) => item.title)} - NGL questions`;
   } else {
     pageTitle =
-      'NGL questions - browse best ngl questions and messages, bot ngl questions';
+      'NGL BOT questions - browse ngl bot messages, other questions to ask on ngl';
   }
 
   const sortOptions = ['Recent', 'A-Z', 'Z-A'];
@@ -708,7 +708,7 @@ export const Apps = () => {
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Browse NGL questions</h1>
+        <h1 className="hero-header">Browse NGL bot questions</h1>
         <form className="home">
           <label>
             <FontAwesomeIcon className="search-icon" icon={faSearch} />
@@ -717,7 +717,7 @@ export const Apps = () => {
               className="input-search-home"
               onChange={handleSearch}
               /* onFocus={handleClick} */
-              placeholder="Search NGL questions..."
+              placeholder="Search NGL bot questions..."
             />
           </label>
         </form>

@@ -433,7 +433,7 @@ export const AppView = () => {
                   </>
                 ) : (
                   <>
-                    🥳&nbsp;<i>This is NOT a bot NGL message.</i>
+                    🥳&nbsp;<i>This is NOT an NGL bot message.</i>
                   </>
                 )}
               </p>
@@ -530,7 +530,7 @@ export const AppView = () => {
               className="button-copy"
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `https://www.nglquestions.com/questions/${app.title}`,
+                  `https://www.nglbotquestions.com/questions/${app.title}`,
                 );
               }}
             />
@@ -538,21 +538,21 @@ export const AppView = () => {
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.nqlquestions.com/questions/${app.id}`}
+              url={`https://www.nqlbotquestions.com/questions/${app.id}`}
               title={`Check out this NGL question: '${app.title}'`}
               hashtags={['Apps']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
             <LinkedinShareButton
-              url={`https://www.nqlquestions.com/questions/${app.id}`}
+              url={`https://www.nqlbotquestions.com/questions/${app.id}`}
             >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
               subject="Check out this NGL question!"
               body={`This NGL question is fun: '${app.title}'`}
-              url={`https://www.nqlquestions.com/questions/${app.id}`}
+              url={`https://www.nqlbotquestions.com/questions/${app.id}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>
