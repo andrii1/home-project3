@@ -530,17 +530,33 @@ export const Apps = () => {
   }, [sortOrder]);
 
   let pageTitle;
+  let pageDescription;
   if (topicIdParam) {
     pageTitle = `${topics
       .filter((topic) => topic.id === parseInt(topicIdParam, 10))
-      .map((item) => item.title)} - NGL questions`;
+      .map((item) => {
+        if (item.meta_title) {
+          return item.meta_title;
+        }
+        return item.title.charAt(0).toUpperCase() + item.title.slice(1);
+      })}`;
+    pageDescription = `${topics
+      .filter((topic) => topic.id === parseInt(topicIdParam, 10))
+      .map((item) => {
+        if (item.description) {
+          return item.description;
+        }
+        return 'NGL bot questions examples, NGL questions to ask, funny NGL questions, NGL generated questions list';
+      })}`;
   } else if (categoryIdParam) {
     pageTitle = `${categories
       .filter((category) => category.id === parseInt(categoryIdParam, 10))
-      .map((item) => item.title)} - NGL questions`;
+      .map((item) => item.title)} - ngl questions`;
   } else {
     pageTitle =
-      'NGL BOT questions - browse ngl bot messages, other questions to ask on ngl';
+      'NGL bot questions - NGL bot questions list, other questions to ask on NGL';
+    pageDescription =
+      'NGL bot questions examples, NGL questions to ask, funny NGL questions, NGL generated questions list';
   }
 
   const sortOptions = ['Recent', 'A-Z', 'Z-A'];
@@ -704,11 +720,13 @@ export const Apps = () => {
     <main>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Find best NGL questions for free" />
+        <meta name="description" content={pageDescription} />
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Browse NGL bot questions</h1>
+        <h1 className="hero-header">
+          {topicIdParam ? pageTitle : 'NGL questions list'}
+        </h1>
         <form className="home">
           <label>
             <FontAwesomeIcon className="search-icon" icon={faSearch} />

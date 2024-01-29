@@ -9,6 +9,8 @@ const getTopics = async () => {
     const topics = await knex('topics').select(
       'topics.id as id',
       'topics.title as title',
+      'topics.meta_title as meta_title',
+      'topics.meta_description as description',
     );
     return topics;
   } catch (error) {

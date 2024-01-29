@@ -14,7 +14,7 @@ export const StripeSuccess = () => {
         <h1 className="hero-header">Success!</h1>
         <p>Thank you for your purchase!</p>
         <Link to="/questions/topic/1">
-          <Button label="See all NGL bot messages" />
+          <Button label="See all ngl bot messages" />
         </Link>
       </main>
     </>
