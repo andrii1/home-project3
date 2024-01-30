@@ -479,7 +479,7 @@ export const Apps = () => {
       </Link>
     );
   });
-  console.log('hello', topicIdParam === '1' || false);
+
   const topicsList = topics.map((topic) => {
     if (topicIdParam) {
       return (
