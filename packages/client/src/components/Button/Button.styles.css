@@ -21,6 +21,16 @@
   box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset;
 }
 
+.storybook-button--highlight {
+  background-image: linear-gradient(
+    to bottom,
+    #ee2079 0%,
+    #f54d4d 51%,
+    #fc7c1f 100%
+  );
+  color: white;
+}
+
 .storybook-button--tertiary {
   color: #e5989b;
   background-color: #000;

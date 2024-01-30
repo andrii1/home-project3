@@ -479,7 +479,7 @@ export const Apps = () => {
       </Link>
     );
   });
-
+  console.log('hello', topicIdParam === '1' || false);
   const topicsList = topics.map((topic) => {
     if (topicIdParam) {
       return (
@@ -492,12 +492,16 @@ export const Apps = () => {
             }
             // primary={topic.id.toString() === topicIdParam.toString() && true}
             // secondary={topic.id !== topicIdParam && true}
-            secondary
+            secondary={
+              !!(topic.id !== 1 || (topic.id === 1 && topicIdParam === '1'))
+            }
+            highlight={topic.id === 1 && topicIdParam !== '1'}
             label={topic.title}
           />
         </Link>
       );
     }
+
     if (categoryIdParam) {
       return (
         <Link to={`/questions/topic/${topic.id}`}>
@@ -507,7 +511,11 @@ export const Apps = () => {
     }
     return (
       <Link to={`/questions/topic/${topic.id}`}>
-        <Button secondary label={topic.title} />
+        <Button
+          secondary={topic.id !== 1}
+          highlight={topic.id === 1}
+          label={topic.title}
+        />
       </Link>
     );
   });

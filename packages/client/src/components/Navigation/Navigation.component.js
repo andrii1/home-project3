@@ -176,34 +176,36 @@ export const Navigation = () => {
       <div className="navigation-mobile">
         <div className="menu">
           <ul>
-            <li>
-              <Button
-                secondary
-                className="hamburger-menu-button"
-                onClick={toggleHamburger}
-              >
-                <FontAwesomeIcon icon={hamburgerOpen ? faXmark : faBars} />
-              </Button>
-              <ul
-                className={`hamburger-menu ${
-                  hamburgerOpen ? 'menu-open' : 'menu-closed'
-                }`}
-              >
-                <li>
-                  <NavLink to="/topics" className="nav-link">
-                    Topics
-                  </NavLink>
-                </li>
-              </ul>
-            </li>
-            {/* <li>
+            <div className="logo-nav-mobile">
+              <li>
+                <Button
+                  secondary
+                  className="hamburger-menu-button"
+                  onClick={toggleHamburger}
+                >
+                  <FontAwesomeIcon icon={hamburgerOpen ? faXmark : faBars} />
+                </Button>
+                <ul
+                  className={`hamburger-menu ${
+                    hamburgerOpen ? 'menu-open' : 'menu-closed'
+                  }`}
+                >
+                  <li>
+                    <NavLink to="/topics" className="nav-link">
+                      Topics
+                    </NavLink>
+                  </li>
+                </ul>
+              </li>
+              {/* <li>
               <FontAwesomeIcon className="search-icon" icon={faSearch} />
             </li> */}
-            <li>
-              <NavLink to="/" className="nav-link">
-                <img src={logo} alt="logo" className="img-logo" />
-              </NavLink>
-            </li>
+              <li>
+                <NavLink to="/" className="nav-link">
+                  <img src={logo} alt="logo" className="img-logo" />
+                </NavLink>
+              </li>
+            </div>
             <li>
               {user ? (
                 <div className="container-logged-in">
