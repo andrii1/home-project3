@@ -851,7 +851,7 @@ export const Apps = () => {
               // eslint-disable-next-line react/jsx-no-bind
               onClick={() => handleStripeCheckout(user?.email)}
               primary
-              label="$6.99 (one-time payment) 👌"
+              label="$1.99 (one-time payment) 👌"
             />
           </div>
         </div>
