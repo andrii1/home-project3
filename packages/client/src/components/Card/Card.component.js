@@ -92,13 +92,13 @@ export const Card = ({
                   <form
                     action={`${apiURL()}/stripe/create-checkout-session/`}
                     method="POST"
+                    className="form-absolute"
                   >
                     <Button // eslint-disable-next-line react/jsx-no-bind
                       type="submit"
                       label="See bot questions 👀"
                       size="small"
                       primary
-                      className="absolute"
                     />
                   </form>
                 ) : (
