@@ -64,10 +64,10 @@ export const Topics = () => {
   return (
     <main>
       <Helmet>
-        <title>Apps with AI - discover best AI apps</title>
+        <title>NGL questions to ask - list of topics</title>
         <meta
           name="description"
-          content="Find best Chat GPT prompts for free"
+          content="NGL bot questions list, funny NGL questions, NGL questions to ask your friends, girfriend or boyfriend"
         />
       </Helmet>
       {/* <div className="hero"></div> */}
