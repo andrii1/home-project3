@@ -1,4 +1,6 @@
 const express = require('express');
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const router = express.Router({ mergeParams: true });
 const stripeController = require('../controllers/stripe.controller');
@@ -39,6 +41,23 @@ router.get('/customers', (req, res, next) => {
       .then((result) => res.json(result))
       .catch(next);
   }
+});
+
+router.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: process.env.PUBLIC_STRIPE_PRICE_ID,
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${process.env.DOMAIN}/success`,
+    cancel_url: `${process.env.DOMAIN}/cancel`,
+  });
+
+  res.redirect(303, session.url);
 });
 
 module.exports = router;

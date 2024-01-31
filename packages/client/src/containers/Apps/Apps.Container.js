@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-// import getStripe from '../../lib/getStripe';
+
 import './Apps.Style.css';
 import { apiURL } from '../../apiURL';
 import { Card } from '../../components/Card/Card.component';
@@ -16,7 +16,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Modal from '../../components/Modal/Modal.Component';
 import { blurredQuestions } from '../../utils/blurredQuestions';
 import { useUserContext } from '../../userContext';
-import { handleStripeCheckout } from '../../utils/handleStripeCheckout';
 
 import {
   faSearch,
@@ -454,12 +453,17 @@ export const Apps = () => {
               }
             </span>
             {user ? (
-              <Button // eslint-disable-next-line react/jsx-no-bind
-                onClick={() => handleStripeCheckout(user?.email)}
-                label="🔒 bot message... Upgrade"
-                size="small"
-                primary
-              />
+              <form
+                action={`${apiURL()}/stripe/create-checkout-session/`}
+                method="POST"
+              >
+                <Button // eslint-disable-next-line react/jsx-no-bind
+                  label="🔒 bot message... Upgrade"
+                  size="small"
+                  primary
+                  type="submit"
+                />
+              </form>
             ) : (
               <Link key={app.id} to="/signup">
                 <Button // eslint-disable-next-line react/jsx-no-bind
@@ -855,12 +859,16 @@ export const Apps = () => {
             </p>
           </div>
           <div>
-            <Button
-              // eslint-disable-next-line react/jsx-no-bind
-              onClick={() => handleStripeCheckout(user?.email)}
-              primary
-              label="$1.99 (one-time payment) 👌"
-            />
+            <form
+              action={`${apiURL()}/stripe/create-checkout-session/`}
+              method="POST"
+            >
+              <Button
+                type="submit"
+                primary
+                label="$1.99 (one-time payment) 👌"
+              />
+            </form>
           </div>
         </div>
       ) : apps.data ? (
@@ -900,7 +908,6 @@ export const Apps = () => {
                     setOpenModal(true);
                     setModalTitle('Sign up to like');
                   }}
-                  buttonOnClick={() => handleStripeCheckout(user?.email)}
                 />
               );
             })}

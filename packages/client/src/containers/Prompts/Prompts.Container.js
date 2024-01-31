@@ -945,7 +945,7 @@ export const Prompts = () => {
               primary
               label="Upgrade for $19"
               // eslint-disable-next-line react/jsx-no-bind
-              onClick={handleStripeCheckout}
+              // onClick={handleStripeCheckout}
             />
           </div>
           <p>One-time payment</p>

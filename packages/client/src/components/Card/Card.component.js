@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { apiURL } from '../../apiURL';
 import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button.component';
 import { Badge } from '../Badge/Badge.component';
@@ -88,13 +89,18 @@ export const Card = ({
                   } */}
                 </h2>
                 {user ? (
-                  <Button // eslint-disable-next-line react/jsx-no-bind
-                    onClick={buttonOnClick}
-                    label="See bot questions 👀"
-                    size="small"
-                    primary
-                    className="absolute"
-                  />
+                  <form
+                    action={`${apiURL()}/stripe/create-checkout-session/`}
+                    method="POST"
+                  >
+                    <Button // eslint-disable-next-line react/jsx-no-bind
+                      type="submit"
+                      label="See bot questions 👀"
+                      size="small"
+                      primary
+                      className="absolute"
+                    />
+                  </form>
                 ) : (
                   <Link key={id} to="/signup" className="absolute">
                     <Button // eslint-disable-next-line react/jsx-no-bind

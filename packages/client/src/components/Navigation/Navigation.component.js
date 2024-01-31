@@ -9,7 +9,7 @@ import { Button } from '../Button/Button.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../assets/images/logo.png';
 import { blurredQuestions } from '../../utils/blurredQuestions';
-import { handleStripeCheckout } from '../../utils/handleStripeCheckout';
+
 import {
   faUser,
   faRightFromBracket,
@@ -232,11 +232,16 @@ export const Navigation = () => {
                   >
                     <li>
                       {!customer ? (
-                        <Button
-                          onClick={() => handleStripeCheckout(user?.email)}
-                          primary
-                          label="Unlock NGL bot messages 👀"
-                        />
+                        <form
+                          action={`${apiURL()}/stripe/create-checkout-session/`}
+                          method="POST"
+                        >
+                          <Button
+                            type="submit"
+                            primary
+                            label="Unlock NGL bot messages 👀"
+                          />
+                        </form>
                       ) : (
                         ''
                       )}
@@ -295,11 +300,16 @@ export const Navigation = () => {
           <ul>
             <li>
               {user && !customer ? (
-                <Button
-                  onClick={() => handleStripeCheckout(user?.email)}
-                  primary
-                  label="Unlock NGL bot messages 👀"
-                />
+                <form
+                  action={`${apiURL()}/stripe/create-checkout-session/`}
+                  method="POST"
+                >
+                  <Button
+                    primary
+                    label="Unlock NGL bot messages 👀"
+                    type="submit"
+                  />
+                </form>
               ) : (
                 ''
               )}

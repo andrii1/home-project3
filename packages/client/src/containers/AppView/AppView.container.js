@@ -10,7 +10,7 @@ import { Card } from '../../components/Card/Card.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../components/Modal/Modal.Component';
 import iconCopy from '../../assets/images/icons8-copy-24.png';
-import { handleStripeCheckout } from '../../utils/handleStripeCheckout';
+
 import {
   faEnvelope,
   faLink,
@@ -579,11 +579,12 @@ export const AppView = () => {
                 </p>
               </div>
               <div>
-                <Button
-                  onClick={() => handleStripeCheckout(user?.email)}
-                  primary
-                  label="Upgrade 👌"
-                />
+                <form
+                  action={`${apiURL()}/stripe/create-checkout-session/`}
+                  method="POST"
+                >
+                  <Button primary label="Upgrade 👌" type="submit" />
+                </form>
               </div>
             </div>
           )}
