@@ -62,7 +62,7 @@ export const Topics = () => {
     );
   });
   return (
-    <main>
+    <main className="content">
       <Helmet>
         <title>NGL questions to ask - list of topics</title>
         <meta

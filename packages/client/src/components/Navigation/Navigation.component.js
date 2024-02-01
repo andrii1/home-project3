@@ -199,6 +199,15 @@ export const Navigation = () => {
                       Topics
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink
+                      onClick={toggleHamburger}
+                      to="/faq"
+                      className="nav-link"
+                    >
+                      FAQ
+                    </NavLink>
+                  </li>
                 </ul>
               </li>
               {/* <li>
@@ -227,29 +236,25 @@ export const Navigation = () => {
                   )}
 
                   {!hamburgerUserOpen && (
-                    <ProfileImage onClick={toggleHamburgerUser} name={name} />
+                    <>
+                      {!customer ? (
+                        <form
+                          action={`${apiURL()}/stripe/create-checkout-session/`}
+                          method="POST"
+                        >
+                          <Button type="submit" primary label="Upgrade" />
+                        </form>
+                      ) : (
+                        ''
+                      )}
+                      <ProfileImage onClick={toggleHamburgerUser} name={name} />
+                    </>
                   )}
                   <div
                     className={`menu-user ${
                       hamburgerUserOpen ? 'menu-open' : 'menu-closed'
                     }`}
                   >
-                    <li>
-                      {!customer ? (
-                        <form
-                          action={`${apiURL()}/stripe/create-checkout-session/`}
-                          method="POST"
-                        >
-                          <Button
-                            type="submit"
-                            primary
-                            label="Unlock NGL bot messages 👀"
-                          />
-                        </form>
-                      ) : (
-                        ''
-                      )}
-                    </li>
                     <NavLink
                       to="/bookmarks"
                       className="login"

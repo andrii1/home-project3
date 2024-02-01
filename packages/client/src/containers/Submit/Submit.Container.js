@@ -69,7 +69,7 @@ export const Submit = () => {
       <Helmet>
         <title>Suggest NGL question</title>
       </Helmet>
-      <main>
+      <main className="content">
         <h1 className="hero-title">Submit NGL question</h1>
 
         <div className="form-container add-app-container">

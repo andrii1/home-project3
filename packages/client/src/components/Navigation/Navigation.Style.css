@@ -126,11 +126,12 @@ ul li,
 
 @media only screen and (max-width: 768px) {
   .container-logged-in {
-    flex-direction: column;
-    gap: 1.5rem;
+    flex-direction: row;
+    gap: 1rem;
   }
   .navigation-mobile {
     display: block;
+    margin: 0.75rem 0.5rem 2rem;
   }
   .navigation {
     display: none;

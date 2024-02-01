@@ -9,7 +9,7 @@ export const Faq = () => {
       <Helmet>
         <title>FAQ</title>
       </Helmet>
-      <main>
+      <main className="content">
         <h1 className="hero-header">FAQ</h1>
         <h2>Support</h2>
         <p>Email agorh @ icloud.com for support or payment issues.</p>
