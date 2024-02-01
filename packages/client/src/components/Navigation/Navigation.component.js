@@ -191,7 +191,11 @@ export const Navigation = () => {
                   }`}
                 >
                   <li>
-                    <NavLink to="/topics" className="nav-link">
+                    <NavLink
+                      onClick={toggleHamburger}
+                      to="/topics"
+                      className="nav-link"
+                    >
                       Topics
                     </NavLink>
                   </li>
@@ -246,10 +250,16 @@ export const Navigation = () => {
                         ''
                       )}
                     </li>
-                    <NavLink to="/bookmarks" className="login">
+                    <NavLink
+                      to="/bookmarks"
+                      className="login"
+                      onClick={toggleHamburgerUser}
+                    >
                       Bookmarks
                     </NavLink>
-                    <NavLink to="/questions/new">Submit NGL question</NavLink>
+                    <NavLink to="/questions/new" onClick={toggleHamburgerUser}>
+                      Submit NGL question
+                    </NavLink>
                     <div onClick={logout}>Logout</div>
                   </div>
                 </div>
