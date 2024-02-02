@@ -445,17 +445,18 @@ export const Apps = () => {
       return (
         <div key={app.id}>
           <li>
-            <span className="blurred">
+            {/* <span className="blurred">
               {
                 blurredQuestions[
                   Math.floor(Math.random() * blurredQuestions.length)
                 ]
               }
-            </span>
+            </span> */}
             {user ? (
               <form
                 action={`${apiURL()}/stripe/create-checkout-session/`}
                 method="POST"
+                className="form-stripe-checkout"
               >
                 <Button // eslint-disable-next-line react/jsx-no-bind
                   label="🔒 bot message... Upgrade"
@@ -565,8 +566,7 @@ export const Apps = () => {
       .filter((category) => category.id === parseInt(categoryIdParam, 10))
       .map((item) => item.title)} - ngl questions`;
   } else {
-    pageTitle =
-      'NGL bot questions - NGL bot questions list, other questions to ask on NGL';
+    pageTitle = 'NGL Questions - bot messages, funny questions to ask';
     pageDescription =
       'NGL bot questions examples, NGL questions to ask, funny NGL questions, NGL generated questions list';
   }

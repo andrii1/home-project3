@@ -34,7 +34,7 @@ h1 {
 input[type='text'] {
   height: 2.5rem;
   padding: 1rem 1rem;
-  min-width: 15rem;
+  /* min-width: 15rem; */
   border-radius: 5px;
   border: none;
 }

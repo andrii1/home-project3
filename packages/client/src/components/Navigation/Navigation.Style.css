@@ -116,7 +116,7 @@ ul li,
 
 .navigation-mobile .img-logo {
   padding: 0;
-  max-width: 6rem;
+  max-width: 4.5rem;
   margin-top: 0.3rem;
 }
 
@@ -135,6 +135,17 @@ ul li,
   }
   .navigation {
     display: none;
+  }
+  .input-search-modal {
+    min-width: 19rem !important;
+  }
+  .dropdown-search-modal {
+    min-width: 19rem !important;
+    max-width: 19rem !important;
+  }
+  .modal-close-btn {
+    top: -0.5rem;
+    right: -0.5rem;
   }
 }
 
@@ -175,7 +186,7 @@ ul li,
 }
 
 .input-search-modal {
-  min-width: 28rem !important;
+  min-width: 28rem;
   border: 1px solid #d9e1ec !important;
   padding: 1rem 1.5rem 1rem 2.5rem !important;
   border-radius: 5px !important;
@@ -229,5 +240,5 @@ ul li,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 10rem;
+  min-width: 11rem;
 }

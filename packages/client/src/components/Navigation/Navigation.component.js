@@ -142,11 +142,17 @@ export const Navigation = () => {
             }
           </span> */}
             {user ? (
-              <Button // eslint-disable-next-line react/jsx-no-bind
-                label="🔒 bot message... Upgrade"
-                size="small"
-                primary
-              />
+              <form
+                action={`${apiURL()}/stripe/create-checkout-session/`}
+                method="POST"
+              >
+                <Button
+                  type="submit"
+                  size="small"
+                  primary
+                  label="🔒 bot message... Upgrade"
+                />
+              </form>
             ) : (
               <Link key={result.id} to="/signup">
                 <Button // eslint-disable-next-line react/jsx-no-bind
@@ -211,8 +217,25 @@ export const Navigation = () => {
                 </ul>
               </li>
               {/* <li>
-              <FontAwesomeIcon className="search-icon" icon={faSearch} />
-            </li> */}
+                <form>
+                  <label>
+                    <FontAwesomeIcon className="search-icon" icon={faSearch} />
+                    <input
+                      type="text"
+                      className="input-search-navigation"
+                      onFocus={() => setOpenSearchModal((modal) => !modal)}
+                      placeholder="Search ( ⌘ + k )"
+                    />
+                  </label>
+                </form>
+              </li> */}
+              <li>
+                <FontAwesomeIcon
+                  className="search-icon-mobile"
+                  icon={faSearch}
+                  onClick={() => setOpenSearchModal((modal) => !modal)}
+                />
+              </li>
               <li>
                 <NavLink to="/" className="nav-link">
                   <img src={logo} alt="logo" className="img-logo" />
@@ -383,7 +406,6 @@ export const Navigation = () => {
               type="text"
               className="input-search-modal"
               onChange={handleSearch}
-              /* onFocus={handleClick} */
               placeholder="Search"
             />
           </label>

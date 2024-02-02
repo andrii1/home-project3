@@ -37,6 +37,10 @@ main {
   margin-top: 2rem;
 }
 
+.form-stripe-checkout {
+  margin-top: 0rem !important;
+}
+
 .subheading {
   margin-top: 1rem;
 }
@@ -90,6 +94,7 @@ main {
   border-radius: 5px;
   min-width: 45rem;
   max-width: 45rem;
+  z-index: 9;
 }
 .dropdown-search ul {
   padding-left: 0rem !important;
