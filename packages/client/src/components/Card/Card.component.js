@@ -102,13 +102,25 @@ export const Card = ({
                     />
                   </form>
                 ) : (
-                  <Link key={id} to="/signup" className="absolute">
+                  <form
+                    action={`${apiURL()}/stripe/create-checkout-session/`}
+                    method="POST"
+                    className="form-absolute"
+                  >
                     <Button // eslint-disable-next-line react/jsx-no-bind
-                      label="🔒 Sign up & upgrade"
+                      type="submit"
+                      label="See bot questions 👀"
                       size="small"
                       primary
                     />
-                  </Link>
+                  </form>
+                  // <Link key={id} to="/signup" className="absolute">
+                  //   <Button // eslint-disable-next-line react/jsx-no-bind
+                  //     label="🔒 Sign up & upgrade"
+                  //     size="small"
+                  //     primary
+                  //   />
+                  // </Link>
                 )}
               </div>
             </div>
