@@ -29,6 +29,7 @@ export const TableRow = ({
   category,
   topic,
   deleteBookmark,
+  copyToClipboard,
   ...props
 }) => {
   return (
@@ -47,9 +48,7 @@ export const TableRow = ({
           <button
             type="button"
             className="button-copy"
-            onClick={() => {
-              navigator.clipboard.writeText(title);
-            }}
+            onClick={copyToClipboard}
           >
             <img src={iconCopy} alt="copy" className="icon-copy" />
           </button>
@@ -100,6 +99,7 @@ TableRow.propTypes = {
   category: PropTypes.string,
   topic: PropTypes.string,
   deleteBookmark: PropTypes.func,
+  copyToClipboard: PropTypes.func,
 };
 
 TableRow.defaultProps = {
@@ -108,4 +108,5 @@ TableRow.defaultProps = {
   category: null,
   topic: null,
   deleteBookmark: undefined,
+  copyToClipboard: undefined,
 };

@@ -23,3 +23,8 @@
 .dashboard div {
   margin-top: 7px;
 }
+
+.container-favorites {
+  position: relative;
+  width: 100%;
+}

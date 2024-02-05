@@ -5,10 +5,13 @@ import { Helmet } from 'react-helmet';
 import './Bookmarks.Style.css';
 import { apiURL } from '../../apiURL';
 import { TableRow } from '../../components/TableRow/TableRow.Component';
+import Toast from '../../components/Toast/Toast.Component';
 
 export const Bookmarks = () => {
   const { user, loading } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
+  const [animation, setAnimation] = useState('');
   const [favorites, setFavorites] = useState([]);
   const [ratings, setRatings] = useState([]);
   const navigate = useNavigate();
@@ -90,6 +93,7 @@ export const Bookmarks = () => {
         title={prompt.title}
         category={prompt.category}
         topic={prompt.topic}
+        copyToClipboard={() => copyToClipboard(prompt.title)}
         deleteBookmark={() => deleteRating(prompt.id)}
       />
     </div>
@@ -98,6 +102,19 @@ export const Bookmarks = () => {
     if (loading) return;
     if (!user) return navigate('/');
   }, [user, loading, navigate]);
+  const copyToClipboard = (item) => {
+    navigator.clipboard.writeText(item);
+
+    setOpenToast(true);
+    setAnimation('open-animation');
+
+    setTimeout(() => {
+      setAnimation('close-animation');
+    }, 2000);
+    setTimeout(() => {
+      setOpenToast(false);
+    }, 2500);
+  };
   return (
     <>
       <Helmet>
@@ -105,7 +122,12 @@ export const Bookmarks = () => {
       </Helmet>
       <main>
         <h1 className="hero-title">Bookmarks</h1>
-        {favoritesList}
+        <div className="container-favorites">
+          {favoritesList}
+          <Toast open={openToast} overlayClass={`toast ${animation}`} right="0">
+            <span>Copied to clipboard!</span>
+          </Toast>
+        </div>
       </main>
     </>
   );

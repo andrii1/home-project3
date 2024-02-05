@@ -9,6 +9,7 @@ import { Badge } from '../../components/Badge/Badge.component';
 import { Card } from '../../components/Card/Card.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../components/Modal/Modal.Component';
+import Toast from '../../components/Toast/Toast.Component';
 import iconCopy from '../../assets/images/icons8-copy-24.png';
 
 import {
@@ -117,6 +118,8 @@ const alternativeApps = [
 export const AppView = () => {
   const { id } = useParams();
   const [openModal, setOpenModal] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
+  const [animation, setAnimation] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
@@ -357,6 +360,19 @@ export const AppView = () => {
     }
   };
 
+  const copyToClipboard = (item) => {
+    navigator.clipboard.writeText(item);
+    setOpenToast(true);
+    setAnimation('open-animation');
+
+    setTimeout(() => {
+      setAnimation('close-animation');
+    }, 2000);
+    setTimeout(() => {
+      setOpenToast(false);
+    }, 2500);
+  };
+
   return (
     <>
       <Helmet>
@@ -519,21 +535,23 @@ export const AppView = () => {
             <button
               type="button"
               className="button-copy"
-              onClick={() => {
-                navigator.clipboard.writeText(app.title);
-              }}
+              onClick={() => copyToClipboard(app.title)}
             >
               <img src={iconCopy} alt="copy" className="icon-copy" />
             </button>
+
             <FontAwesomeIcon
               icon={faLink}
               className="button-copy"
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  `https://www.nglbotquestions.com/questions/${app.title}`,
-                );
-              }}
+              onClick={() =>
+                copyToClipboard(
+                  `https://www.nglbotquestions.com/questions/${app.id}`,
+                )
+              }
             />
+            <Toast open={openToast} overlayClass={`toast ${animation}`}>
+              <span>Copied to clipboard!</span>
+            </Toast>
             <FacebookShareButton url={`/questions/${app.id}`}>
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>

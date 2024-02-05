@@ -41,9 +41,11 @@
 }
 
 .icons-apps-page {
+  position: relative;
+  width: 100%;
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 }
 
