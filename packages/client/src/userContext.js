@@ -52,6 +52,10 @@ export function UserProvider({ children }) {
       fetchUserName();
       fetchIfCustomer();
     }
+    if (user?.displayName) {
+      setName(user.displayName);
+    }
+
     /* if (!user) navigate('/'); */
   }, [user, fetchUserName, fetchIfCustomer]);
 
