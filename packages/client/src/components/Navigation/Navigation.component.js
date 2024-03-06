@@ -8,6 +8,7 @@ import { useUserContext } from '../../userContext';
 import { Button } from '../Button/Button.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../assets/images/logo.png';
+
 import { blurredQuestions } from '../../utils/blurredQuestions';
 
 import {
@@ -18,6 +19,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../Modal/Modal.Component';
+import UpgradeModal from '../UpgradeModal/UpgradeModal.Component';
 import { ProfileImage } from '../ProfileImage/ProfileImage.Component';
 
 export const Navigation = () => {
@@ -26,6 +28,7 @@ export const Navigation = () => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [hamburgerUserOpen, setHamburgerUserOpen] = useState(false);
   const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [openUpgradeModal, setOpenUpgradeModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [searchTerms, setSearchTerms] = useState();
   const [resultsHome, setResultsHome] = useState([]);
@@ -33,6 +36,10 @@ export const Navigation = () => {
   const [topics, setTopics] = useState([]);
   const toggleModal = () => {
     setOpenModal(false);
+    document.body.style.overflow = 'visible';
+  };
+  const toggleUpgradeModal = () => {
+    setOpenUpgradeModal(false);
     document.body.style.overflow = 'visible';
   };
   const toggleSearchModal = () => {
@@ -264,12 +271,13 @@ export const Navigation = () => {
                   {!hamburgerUserOpen && (
                     <>
                       {!customer ? (
-                        <form
-                          action={`${apiURL()}/stripe/create-checkout-session/`}
-                          method="POST"
-                        >
-                          <Button type="submit" primary label="Upgrade" />
-                        </form>
+                        <Button
+                          onClick={() => {
+                            setOpenUpgradeModal(true);
+                          }}
+                          primary
+                          label="Upgrade"
+                        />
                       ) : (
                         ''
                       )}
@@ -341,16 +349,13 @@ export const Navigation = () => {
           <ul>
             <li>
               {user && !customer ? (
-                <form
-                  action={`${apiURL()}/stripe/create-checkout-session/`}
-                  method="POST"
-                >
-                  <Button
-                    primary
-                    label="Unlock NGL bot messages 👀"
-                    type="submit"
-                  />
-                </form>
+                <Button
+                  primary
+                  label="Unlock NGL bot messages 👀"
+                  onClick={() => {
+                    setOpenUpgradeModal(true);
+                  }}
+                />
               ) : (
                 ''
               )}
@@ -428,6 +433,7 @@ export const Navigation = () => {
           ''
         )}
       </Modal>
+      <UpgradeModal open={openUpgradeModal} toggle={toggleUpgradeModal} />
     </>
   );
 };

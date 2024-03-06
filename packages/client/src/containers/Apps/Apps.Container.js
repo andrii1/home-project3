@@ -14,6 +14,7 @@ import DropDownView from '../../components/CategoriesListDropDown/CategoriesList
 // eslint-disable-next-line import/no-extraneous-dependencies
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Modal from '../../components/Modal/Modal.Component';
+import UpgradeModal from '../../components/UpgradeModal/UpgradeModal.Component';
 import { blurredQuestions } from '../../utils/blurredQuestions';
 import { useUserContext } from '../../userContext';
 
@@ -955,32 +956,7 @@ export const Apps = () => {
           <Button secondary label="Log in" />
         </Link>
       </Modal>
-      <Modal open={openUpgradeModal} toggle={toggleUpgradeModal}>
-        <img
-          src="https://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/message.png"
-          alt="Upgrade"
-          className="img-upgrade"
-        />
-        <p className="no-margin">
-          <strong>See all NGL bot messages</strong>
-        </p>
-        <p className="no-margin">
-          Check which messages are sent by bots in NGL app
-        </p>
-        <form
-          action={`${apiURL()}/stripe/create-checkout-session/`}
-          method="POST"
-        >
-          <Button // eslint-disable-next-line react/jsx-no-bind
-            type="submit"
-            label="🔓 Unlock"
-            primary
-          />
-        </form>
-        <p className="no-margin shadow-text">
-          One payment, lifetime access, $1.99
-        </p>
-      </Modal>
+      <UpgradeModal open={openUpgradeModal} toggle={toggleUpgradeModal} />
     </main>
   );
 };
