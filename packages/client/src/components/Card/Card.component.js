@@ -38,6 +38,7 @@ export const Card = ({
   addRating,
   deleteRating,
   ratingOnClick,
+  botQuestionOnClick,
   buttonOnClick,
   numberOfRatings,
 }) => {
@@ -88,7 +89,15 @@ export const Card = ({
                     ]
                   } */}
                 </h2>
-                {user ? (
+                <Button // eslint-disable-next-line react/jsx-no-bind
+                  type="submit"
+                  label="🔓 Unlock bot questions"
+                  size="small"
+                  primary
+                  onClick={botQuestionOnClick}
+                  className="form-absolute"
+                />
+                {/* {user ? (
                   <form
                     action={`${apiURL()}/stripe/create-checkout-session/`}
                     method="POST"
@@ -121,7 +130,7 @@ export const Card = ({
                   //     primary
                   //   />
                   // </Link>
-                )}
+                )} */}
               </div>
             </div>
             {/* <Badge label={pricingType} size="small" /> */}
@@ -299,6 +308,7 @@ Card.propTypes = {
   addRating: PropTypes.func,
   deleteRating: PropTypes.func,
   ratingOnClick: PropTypes.func,
+  botQuestionOnClick: PropTypes.func,
   buttonOnClick: PropTypes.func,
   numberOfRatings: PropTypes.string,
 };
@@ -320,5 +330,6 @@ Card.defaultProps = {
   addRating: undefined,
   deleteRating: undefined,
   ratingOnClick: undefined,
+  botQuestionOnClick: undefined,
   buttonOnClick: undefined,
 };

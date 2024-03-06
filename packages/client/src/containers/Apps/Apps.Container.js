@@ -37,6 +37,7 @@ export const Apps = () => {
   const [allRatings, setAllRatings] = useState([]);
   const [ratings, setRatings] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openUpgradeModal, setOpenUpgradeModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [categories, setCategories] = useState([]);
   const [filteredTopics, setFilteredTopics] = useState([]);
@@ -73,6 +74,11 @@ export const Apps = () => {
 
   const toggleModal = () => {
     setOpenModal(false);
+    document.body.style.overflow = 'visible';
+  };
+
+  const toggleUpgradeModal = () => {
+    setOpenUpgradeModal(false);
     document.body.style.overflow = 'visible';
   };
 
@@ -453,6 +459,26 @@ export const Apps = () => {
               }
             </span> */}
             {user ? (
+              <Button // eslint-disable-next-line react/jsx-no-bind
+                label="🔒 Unlock bot questions"
+                size="small"
+                primary
+                onClick={() => {
+                  setOpenUpgradeModal(true);
+                }}
+              />
+            ) : (
+              <Button // eslint-disable-next-line react/jsx-no-bind
+                label="🔒 bot message... Sign up & upgrade"
+                size="small"
+                primary
+                onClick={() => {
+                  setOpenModal(true);
+                  setModalTitle('Create account or log in');
+                }}
+              />
+            )}
+            {/* {user ? (
               <form
                 action={`${apiURL()}/stripe/create-checkout-session/`}
                 method="POST"
@@ -473,7 +499,7 @@ export const Apps = () => {
                   primary
                 />
               </Link>
-            )}
+            )} */}
           </li>
         </div>
       );
@@ -908,6 +934,10 @@ export const Apps = () => {
                     setOpenModal(true);
                     setModalTitle('Sign up to like');
                   }}
+                  botQuestionOnClick={() => {
+                    setOpenUpgradeModal(true);
+                    // setModalTitle('Sign up t');
+                  }}
                 />
               );
             })}
@@ -924,6 +954,32 @@ export const Apps = () => {
         <Link to="/login">
           <Button secondary label="Log in" />
         </Link>
+      </Modal>
+      <Modal open={openUpgradeModal} toggle={toggleUpgradeModal}>
+        <img
+          src="https://res.cloudinary.com/dgarvanzw/image/upload/ngl_questions/message.png"
+          alt="Upgrade"
+          className="img-upgrade"
+        />
+        <p className="no-margin">
+          <strong>See all NGL bot messages</strong>
+        </p>
+        <p className="no-margin">
+          Check which messages are sent by bots in NGL app
+        </p>
+        <form
+          action={`${apiURL()}/stripe/create-checkout-session/`}
+          method="POST"
+        >
+          <Button // eslint-disable-next-line react/jsx-no-bind
+            type="submit"
+            label="🔓 Unlock"
+            primary
+          />
+        </form>
+        <p className="no-margin shadow-text">
+          One payment, lifetime access, $1.99
+        </p>
       </Modal>
     </main>
   );

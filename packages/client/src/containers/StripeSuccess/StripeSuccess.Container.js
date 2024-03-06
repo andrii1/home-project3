@@ -6,7 +6,7 @@ import { useUserContext } from '../../userContext';
 import './StripeSuccess.Style.css';
 
 export const StripeSuccess = () => {
-  const { user, customer } = useUserContext();
+  const { user } = useUserContext();
   return (
     <>
       <Helmet>

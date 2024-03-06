@@ -159,6 +159,9 @@ export const Navigation = () => {
                   label="🔒 bot message... Sign up & upgrade"
                   size="small"
                   primary
+                  onClick={() => {
+                    setOpenSearchModal(false);
+                  }}
                 />
               </Link>
             )}
